@@ -1,3 +1,4 @@
+import 'package:car_app/camera_view.dart';
 import 'package:flutter/material.dart';
 
 class Menu extends StatelessWidget {
@@ -8,10 +9,11 @@ class Menu extends StatelessWidget {
     final List<IconData> icons = <IconData>[
       Icons.music_note_outlined,
       Icons.place_outlined,
+      Icons.videocam_outlined,
       Icons.info_outline_rounded,
       Icons.settings,
     ];
-    final List<int> colorCodes = <int>[600, 500, 100, 300];
+    final List<int> colorCodes = <int>[600, 500, 100, 300, 900];
     final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
@@ -29,7 +31,15 @@ class Menu extends StatelessWidget {
                   color: Colors.amber[colorCodes[index]],
                   child: Center(
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        if (index == 2) {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const CameraView(),
+                            ),
+                          );
+                        }
+                      },
                       child: Container(
                         width: size.width / icons.length - 50,
                         height: size.height,
