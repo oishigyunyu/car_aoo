@@ -1,4 +1,5 @@
 import 'package:car_app/camera_view.dart';
+import 'package:car_app/music_view.dart';
 import 'package:flutter/material.dart';
 
 class Menu extends StatelessWidget {
@@ -32,6 +33,13 @@ class Menu extends StatelessWidget {
                   child: Center(
                     child: InkWell(
                       onTap: () {
+                        if (index == 0) {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const MusicView(),
+                            ),
+                          );
+                        }
                         if (index == 2) {
                           Navigator.of(context).push(
                             MaterialPageRoute(
