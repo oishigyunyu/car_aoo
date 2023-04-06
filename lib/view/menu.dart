@@ -1,7 +1,7 @@
-import 'package:car_app/camera_view.dart';
-import 'package:car_app/information.dart';
-import 'package:car_app/map.dart';
-import 'package:car_app/music_view.dart';
+import 'package:car_app/view/camera_view.dart';
+import 'package:car_app/view/information.dart';
+import 'package:car_app/view/map/map.dart';
+import 'package:car_app/view/music_view.dart';
 import 'package:flutter/material.dart';
 
 class Menu extends StatelessWidget {

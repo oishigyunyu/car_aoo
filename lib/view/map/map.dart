@@ -49,6 +49,7 @@ class _MapViewState extends State<MapView> {
           ),
         );
       });
+      await _getAddress();
     }).catchError((e) {
       print(e);
     });
