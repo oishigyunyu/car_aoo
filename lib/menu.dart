@@ -1,5 +1,6 @@
 import 'package:car_app/camera_view.dart';
 import 'package:car_app/information.dart';
+import 'package:car_app/map.dart';
 import 'package:car_app/music_view.dart';
 import 'package:flutter/material.dart';
 
@@ -47,6 +48,13 @@ class Menu extends StatelessWidget {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) => const MusicView(),
+                                ),
+                              );
+                            }
+                            if (index == 1) {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => const MapView(),
                                 ),
                               );
                             }
@@ -102,8 +110,9 @@ class Menu extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: const Icon(
+          child: Icon(
             Icons.home,
+            color: Theme.of(context).colorScheme.onPrimaryContainer,
           ),
         ),
       ),
