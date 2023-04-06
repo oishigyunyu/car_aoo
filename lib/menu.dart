@@ -1,4 +1,5 @@
 import 'package:car_app/camera_view.dart';
+import 'package:car_app/information.dart';
 import 'package:car_app/music_view.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,13 @@ class Menu extends StatelessWidget {
       Icons.info_outline_rounded,
       Icons.settings,
     ];
-    final List<int> colorCodes = <int>[600, 500, 100, 300, 900];
+    final List<String> iconNames = <String>[
+      "Music",
+      "Map",
+      "Camera",
+      "Information",
+      "Settings"
+    ];
     final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
@@ -29,37 +36,58 @@ class Menu extends StatelessWidget {
                 return Container(
                   width: size.width / icons.length,
                   height: size.height,
-                  color: Colors.amber[colorCodes[index]],
+                  color: Theme.of(context).colorScheme.background,
                   child: Center(
-                    child: InkWell(
-                      onTap: () {
-                        if (index == 0) {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => const MusicView(),
+                    child: Center(
+                      child: Card(
+                        color: Theme.of(context).colorScheme.tertiaryContainer,
+                        child: InkWell(
+                          onTap: () {
+                            if (index == 0) {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => const MusicView(),
+                                ),
+                              );
+                            }
+                            if (index == 2) {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => const CameraView(),
+                                ),
+                              );
+                            }
+                            if (index == 3) {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => const Information(),
+                                ),
+                              );
+                            }
+                          },
+                          child: SizedBox(
+                            width: size.width / icons.length,
+                            height: size.width / icons.length,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  icons[index],
+                                  size: size.width / 30,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onTertiaryContainer,
+                                ),
+                                Text(
+                                  iconNames[index],
+                                  style: TextStyle(
+                                      fontSize: size.width / 40,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onTertiaryContainer),
+                                ),
+                              ],
                             ),
-                          );
-                        }
-                        if (index == 2) {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => const CameraView(),
-                            ),
-                          );
-                        }
-                      },
-                      child: Container(
-                        width: size.width / icons.length - 50,
-                        height: size.height,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.cyan,
-                        ),
-                        child: Center(
-                          child: Icon(
-                            icons[index],
-                            size: size.width / icons.length / 2,
-                            color: Colors.purpleAccent,
                           ),
                         ),
                       ),
@@ -70,7 +98,7 @@ class Menu extends StatelessWidget {
             ),
           ],
         ),
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton: FloatingActionButton.large(
           onPressed: () {
             Navigator.of(context).pop();
           },

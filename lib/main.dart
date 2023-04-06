@@ -1,3 +1,4 @@
+import 'package:car_app/color_schemes.g.dart';
 import 'package:car_app/top.dart';
 import 'package:flutter/material.dart';
 
@@ -12,8 +13,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
+      darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
       home: const TopPage(title: 'Flutter Demo Home Page'),
     );
   }
