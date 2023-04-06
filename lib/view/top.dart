@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'menu.dart';
 
@@ -11,25 +12,30 @@ class TopPage extends StatefulWidget {
 }
 
 class _TopPage extends State<TopPage> {
+  String _appVersion = "";
+
+  Future<void> _getAppVersion() async {
+    String appVersion;
+    try {
+      appVersion = await AppInfo.appVersion ?? "Unknown App Version";
+    } on PlatformException {
+      appVersion = "Failed app version";
+    }
+    setState(() {
+      _appVersion = appVersion;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getAppVersion();
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    var now = DateTime.now();
-    final List<String> days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    final List<String> months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec'
-    ];
+
     return SafeArea(
       child: Scaffold(
         body: Container(
@@ -68,8 +74,8 @@ class _TopPage extends State<TopPage> {
                               color: Theme.of(context)
                                   .colorScheme
                                   .primaryContainer),
-                          child: const Center(
-                            child: Text("Hello"),
+                          child: Center(
+                            child: Text(_appVersion),
                           ),
                         ),
                       ),
@@ -117,5 +123,14 @@ class _TopPage extends State<TopPage> {
         ),
       ),
     );
+  }
+}
+
+class AppInfo {
+  static const MethodChannel _channel = MethodChannel("appInfo");
+
+  static Future<String?> get appVersion async {
+    final String? version = await _channel.invokeMethod("getAppVersion");
+    return version;
   }
 }
