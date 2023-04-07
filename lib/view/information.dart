@@ -167,7 +167,7 @@ class Information extends StatelessWidget {
                 ),
               },
               Align(
-                alignment: Alignment.bottomRight,
+                alignment: Alignment.topRight,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: FloatingActionButton.large(

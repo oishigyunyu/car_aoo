@@ -151,6 +151,18 @@ class _MapViewState extends State<MapView> {
                   ),
                 ),
               ),
+              Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: FloatingActionButton.large(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Icon(Icons.keyboard_return),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

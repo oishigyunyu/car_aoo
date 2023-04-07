@@ -81,7 +81,6 @@ class _MenuState extends State<Menu> {
                       child: Container(
                         width: size.width / icons.length,
                         height: size.width / icons.length,
-                        padding: const EdgeInsets.all(8.0),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
