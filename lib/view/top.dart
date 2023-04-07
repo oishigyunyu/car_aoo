@@ -4,8 +4,7 @@ import 'package:flutter/services.dart';
 import 'menu.dart';
 
 class TopPage extends StatefulWidget {
-  const TopPage({super.key, required this.title});
-  final String title;
+  const TopPage({super.key});
 
   @override
   State<TopPage> createState() => _TopPage();

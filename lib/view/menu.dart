@@ -1,6 +1,6 @@
 import 'package:car_app/view/camera_view.dart';
 import 'package:car_app/view/information.dart';
-import 'package:car_app/view/map/map.dart';
+import 'package:car_app/view/map.dart';
 import 'package:car_app/view/music_view.dart';
 import 'package:flutter/material.dart';
 
@@ -88,11 +88,9 @@ class Menu extends StatelessWidget {
                                 ),
                                 Text(
                                   iconNames[index],
-                                  style: TextStyle(
-                                      fontSize: size.width / 40,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onTertiaryContainer),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineMedium,
                                 ),
                               ],
                             ),
