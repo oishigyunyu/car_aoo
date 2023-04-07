@@ -66,6 +66,7 @@ flutter:
   assets:
     - assets/static/images/wallpaper.jpg
     - assets/static/images/vaundy_strobo.jpg
+    - assets/static/images/car-top-view.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -3,7 +3,6 @@ package com.oishigyunyu.car_app
 import io.flutter.embedding.android.FlutterActivity
 import android.content.pm.PackageManager
 import androidx.annotation.NonNull
-import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -14,7 +13,7 @@ class MainActivity: FlutterActivity() {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
-        MethodChannnel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler{
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler{
             call, result ->
             if (call.method == "getAppVersion"){
                 try {
