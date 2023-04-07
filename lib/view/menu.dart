@@ -4,113 +4,117 @@ import 'package:car_app/view/map.dart';
 import 'package:car_app/view/music_view.dart';
 import 'package:flutter/material.dart';
 
-class Menu extends StatelessWidget {
+class Menu extends StatefulWidget {
   const Menu({Key? key}) : super(key: key);
 
+  @override
+  State<Menu> createState() => _MenuState();
+}
+
+class _MenuState extends State<Menu> {
   @override
   Widget build(BuildContext context) {
     final List<IconData> icons = <IconData>[
       Icons.music_note_outlined,
-      Icons.place_outlined,
-      Icons.videocam_outlined,
       Icons.info_outline_rounded,
+      Icons.videocam_outlined,
       Icons.settings,
+      Icons.place_outlined,
+      Icons.home
     ];
     final List<String> iconNames = <String>[
       "Music",
-      "Map",
-      "Camera",
       "Information",
-      "Settings"
+      "Camera",
+      "Settings",
+      "Map",
+      "Home",
     ];
     final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
-        body: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            ListView.builder(
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemCount: icons.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  width: size.width / icons.length,
-                  height: size.height,
-                  color: Theme.of(context).colorScheme.background,
-                  child: Center(
-                    child: Center(
-                      child: Card(
-                        color: Theme.of(context).colorScheme.tertiaryContainer,
-                        child: InkWell(
-                          onTap: () {
-                            if (index == 0) {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => const MusicView(),
-                                ),
-                              );
-                            }
-                            if (index == 1) {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => const MapView(),
-                                ),
-                              );
-                            }
-                            if (index == 2) {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => const CameraView(),
-                                ),
-                              );
-                            }
-                            if (index == 3) {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => const Information(),
-                                ),
-                              );
-                            }
-                          },
-                          child: SizedBox(
-                            width: size.width / icons.length,
-                            height: size.width / icons.length,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  icons[index],
-                                  size: size.width / 30,
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onTertiaryContainer,
-                                ),
-                                Text(
-                                  iconNames[index],
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineMedium,
-                                ),
-                              ],
+        body: Center(
+          child: GridView.builder(
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            itemCount: icons.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Container(
+                color: Theme.of(context).colorScheme.background,
+                child: Center(
+                  child: Card(
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    child: InkWell(
+                      onTap: () {
+                        if (iconNames[index] == "Music") {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const MusicView(),
                             ),
-                          ),
+                          );
+                        }
+                        if (iconNames[index] == "Map") {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const MapView(),
+                            ),
+                          );
+                        }
+                        if (iconNames[index] == "Camera") {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const CameraView(),
+                            ),
+                          );
+                        }
+                        if (iconNames[index] == "Information") {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const Information(),
+                            ),
+                          );
+                        }
+                        if (iconNames[index] == "Home") {
+                          Navigator.of(context).pop();
+                        }
+                      },
+                      child: Container(
+                        width: size.width / icons.length,
+                        height: size.width / icons.length,
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              icons[index],
+                              size: size.width / 30,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onPrimaryContainer,
+                            ),
+                            Text(
+                              iconNames[index],
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
+                                  ?.apply(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimaryContainer),
+                            ),
+                          ],
                         ),
                       ),
                     ),
                   ),
-                );
-              },
+                ),
+              );
+            },
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 1,
+              crossAxisSpacing: 1,
             ),
-          ],
-        ),
-        floatingActionButton: FloatingActionButton.large(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: Icon(
-            Icons.home,
-            color: Theme.of(context).colorScheme.onPrimaryContainer,
           ),
         ),
       ),

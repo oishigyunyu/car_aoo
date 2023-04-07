@@ -1,3 +1,4 @@
+import 'package:car_app/view/tyre_information.dart';
 import 'package:flutter/material.dart';
 
 class Information extends StatelessWidget {
@@ -43,110 +44,122 @@ class Information extends StatelessWidget {
                         vertical: size.height / 8, horizontal: size.width / 8),
                     child: Card(
                       color: Theme.of(context).colorScheme.primaryContainer,
-                      child: Container(
-                        padding: const EdgeInsets.all(8.0),
-                        width: size.width / 4,
-                        height: size.height / 5,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  tyrePos.keys.elementAt(i),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineSmall
-                                      ?.apply(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onPrimaryContainer),
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: <Widget>[
-                                    Text(
-                                      "ssss",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineLarge
-                                          ?.apply(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .onPrimaryContainer),
-                                    ),
-                                    Text(
-                                      "[kPa]",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall
-                                          ?.apply(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .onPrimaryContainer),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                            Card(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .secondaryContainer,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text(
-                                      "Temp",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleLarge
-                                          ?.apply(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .onSecondaryContainer),
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.baseline,
-                                      textBaseline: TextBaseline.alphabetic,
-                                      children: <Widget>[
-                                        Text(
-                                          "123",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleMedium
-                                              ?.apply(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .onSecondaryContainer),
-                                        ),
-                                        Text(
-                                          "[℃]",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall
-                                              ?.apply(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .onSecondaryContainer),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => TyreInformation(
+                                tyreName: tyrePos.keys.elementAt(i),
                               ),
-                            )
-                          ],
+                            ),
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(8.0),
+                          width: size.width / 4,
+                          height: size.height / 5,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    tyrePos.keys.elementAt(i),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall
+                                        ?.apply(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onPrimaryContainer),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: <Widget>[
+                                      Text(
+                                        "ssss",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineLarge
+                                            ?.apply(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onPrimaryContainer),
+                                      ),
+                                      Text(
+                                        "[kPa]",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineSmall
+                                            ?.apply(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onPrimaryContainer),
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Card(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .secondaryContainer,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(
+                                        "Temp",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleLarge
+                                            ?.apply(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onSecondaryContainer),
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.baseline,
+                                        textBaseline: TextBaseline.alphabetic,
+                                        children: <Widget>[
+                                          Text(
+                                            "123",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium
+                                                ?.apply(
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .onSecondaryContainer),
+                                          ),
+                                          Text(
+                                            "[℃]",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall
+                                                ?.apply(
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .onSecondaryContainer),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -164,7 +177,7 @@ class Information extends StatelessWidget {
                     child: const Icon(Icons.keyboard_return),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

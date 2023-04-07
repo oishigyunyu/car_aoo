@@ -108,11 +108,12 @@ class _TopPage extends State<TopPage> {
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: FloatingActionButton.large(
-                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    backgroundColor:
+                        Theme.of(context).colorScheme.primaryContainer,
                     onPressed: () {},
                     child: Icon(
                       Icons.power_settings_new,
-                      color: Theme.of(context).colorScheme.onPrimary,
+                      color: Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
                   ),
                 ),
