@@ -108,6 +108,7 @@ class _MapViewState extends State<MapView> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       FloatingActionButton.large(
+                        heroTag: "zoom-in",
                         onPressed: () {
                           mapController.animateCamera(
                             CameraUpdate.zoomIn(),
@@ -122,6 +123,7 @@ class _MapViewState extends State<MapView> {
                         height: size.height / 60,
                       ),
                       FloatingActionButton.large(
+                        heroTag: "zoom-out",
                         onPressed: () {
                           mapController.animateCamera(
                             CameraUpdate.zoomOut(),
@@ -141,6 +143,7 @@ class _MapViewState extends State<MapView> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: FloatingActionButton.large(
+                    heroTag: "current-location",
                     onPressed: () {
                       _getCurrentLocation();
                     },
@@ -156,6 +159,7 @@ class _MapViewState extends State<MapView> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: FloatingActionButton.large(
+                    heroTag: "return",
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
