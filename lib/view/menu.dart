@@ -1,101 +1,104 @@
-import 'package:car_app/view/camera_view.dart';
-import 'package:car_app/view/information.dart';
 import 'package:car_app/view/map.dart';
-import 'package:car_app/view/music_view.dart';
 import 'package:flutter/material.dart';
 
-class Menu extends StatefulWidget {
+import 'camera_view.dart';
+import 'information.dart';
+import 'music_view.dart';
+
+class Menu extends StatelessWidget {
   const Menu({Key? key}) : super(key: key);
 
   @override
-  State<Menu> createState() => _MenuState();
-}
-
-class _MenuState extends State<Menu> {
-  @override
   Widget build(BuildContext context) {
-    final List<IconData> icons = <IconData>[
-      Icons.music_note_outlined,
-      Icons.info_outline_rounded,
-      Icons.videocam_outlined,
-      Icons.settings,
-      Icons.place_outlined,
-      Icons.home
-    ];
-    final List<String> iconNames = <String>[
-      "Music",
-      "Information",
-      "Camera",
-      "Settings",
-      "Map",
-      "Home",
-    ];
+    const Map<String, IconData> icons = {
+      "Music": Icons.music_note_outlined,
+      "Information": Icons.info_outline_rounded,
+      "Camera": Icons.videocam_outlined,
+      "Settings": Icons.settings,
+      "Map": Icons.place_outlined,
+      "Home": Icons.home,
+      "Tyre Pressure": Icons.air,
+      "Instrument": Icons.speed,
+      "Watch": Icons.watch_later_outlined,
+      "Weather": Icons.sunny,
+    };
     final size = MediaQuery.of(context).size;
+    const double thickness = 2.0;
     return SafeArea(
       child: Scaffold(
-        body: Center(
-          child: GridView.builder(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        body: Scrollbar(
+          thickness: thickness,
+          child: GridView.count(
+            padding: const EdgeInsets.all(8.0),
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
-            itemCount: icons.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Container(
-                color: Theme.of(context).colorScheme.background,
-                child: Center(
+            crossAxisCount: 2,
+            children: <Widget>[
+              for (int index = 0; index < icons.length; index++) ...{
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: Card(
                     color: Theme.of(context).colorScheme.primaryContainer,
                     child: InkWell(
                       onTap: () {
-                        if (iconNames[index] == "Music") {
+                        if (icons.keys.elementAt(index) == "Music") {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => const MusicView(),
                             ),
                           );
                         }
-                        if (iconNames[index] == "Map") {
+                        if (icons.keys.elementAt(index) == "Map") {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => const MapView(),
+                              builder: (context) => const GoogleMapView(),
                             ),
                           );
                         }
-                        if (iconNames[index] == "Camera") {
+                        if (icons.keys.elementAt(index) == "Camera") {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => const CameraView(),
                             ),
                           );
                         }
-                        if (iconNames[index] == "Information") {
+                        if (icons.keys.elementAt(index) == "Tyre Pressure") {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => const Information(),
                             ),
                           );
                         }
-                        if (iconNames[index] == "Home") {
+                        if (icons.keys.elementAt(index) == "TyrePressure") {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const Information(),
+                            ),
+                          );
+                        }
+                        if (icons.keys.elementAt(index) == "Home") {
                           Navigator.of(context).pop();
                         }
                       },
-                      child: Container(
-                        width: size.width / icons.length,
-                        height: size.width / icons.length,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
                             Icon(
-                              icons[index],
-                              size: size.width / 30,
+                              icons.values.elementAt(index),
+                              size: size.width / 20,
                               color: Theme.of(context)
                                   .colorScheme
                                   .onPrimaryContainer,
                             ),
                             Text(
-                              iconNames[index],
+                              icons.keys.elementAt(index),
                               style: Theme.of(context)
                                   .textTheme
-                                  .headlineSmall
+                                  .headlineLarge
                                   ?.apply(
                                       color: Theme.of(context)
                                           .colorScheme
@@ -107,13 +110,8 @@ class _MenuState extends State<Menu> {
                     ),
                   ),
                 ),
-              );
-            },
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 1,
-              crossAxisSpacing: 1,
-            ),
+              }
+            ],
           ),
         ),
       ),

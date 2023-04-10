@@ -1,7 +1,5 @@
+import 'package:car_app/view/menu.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-import 'menu.dart';
 
 class TopPage extends StatefulWidget {
   const TopPage({super.key});
@@ -22,165 +20,131 @@ class _TopPage extends State<TopPage> {
 
     return SafeArea(
       child: Scaffold(
-        body: Container(
+        body: SizedBox(
           width: size.width,
           height: size.height,
-          decoration:
-              BoxDecoration(color: Theme.of(context).colorScheme.background),
-          child: Stack(
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Card(
-                    child: Container(
-                      width: size.width / 5 * 3 - 8,
-                      height: size.height,
-                      padding: const EdgeInsets.all(8.0),
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image:
-                              AssetImage("assets/static/images/wallpaper.jpg"),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+          child: Ink.image(
+            image: const AssetImage("assets/static/images/dash.jpeg"),
+            fit: BoxFit.fill,
+            child: InkWell(
+              splashColor:
+                  Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.5),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const Menu(),
+                  ),
+                );
+              },
+              child: Stack(
+                children: const <Widget>[
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: SleepButton(),
                     ),
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Card(
-                        child: Container(
-                          padding: const EdgeInsets.all(8.0),
-                          width: size.width / 5 * 2 - 8,
-                          height: size.height / 5 * 2,
-                          decoration: BoxDecoration(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .primaryContainer),
-                          child: Center(
-                            child: Text("wowow"),
-                          ),
-                        ),
-                      ),
-                      Card(
-                        color: Theme.of(context).colorScheme.primaryContainer,
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => const Menu(),
-                              ),
-                            );
-                          },
-                          child: SizedBox(
-                            child: SizedBox(
-                              width: size.width / 5 * 2 - 8,
-                              height: (size.height / 5) * 3 - 48,
-                              child: const Center(
-                                child: Text("Menu"),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Clock(),
+                    ),
                   )
                 ],
               ),
-              Align(
-                alignment: Alignment.topLeft,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: FloatingActionButton.large(
-                    backgroundColor:
-                        Theme.of(context).colorScheme.primaryContainer,
-                    onPressed: () {},
-                    child: Icon(
-                      Icons.power_settings_new,
-                      color: Theme.of(context).colorScheme.onPrimaryContainer,
-                    ),
-                  ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.bottomLeft,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    padding: const EdgeInsets.all(8.0),
-                    width: size.width / 4,
-                    height: size.height / 5,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      textBaseline: TextBaseline.ideographic,
-                      children: <Widget>[
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              "4月7日(金)",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge
-                                  ?.apply(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .background),
-                            ),
-                            Text(
-                              "23:59",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .displayLarge
-                                  ?.apply(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .background),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: <Widget>[
-                                Icon(
-                                  Icons.cloud,
-                                  size: size.height / 20,
-                                  color:
-                                      Theme.of(context).colorScheme.background,
-                                ),
-                                Text(
-                                  "18°",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge
-                                      ?.apply(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .background),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 6,
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              )
-            ],
+            ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class SleepButton extends StatelessWidget {
+  const SleepButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton.large(
+      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+      onPressed: () {},
+      child: Icon(
+        Icons.power_settings_new,
+        color: Theme.of(context).colorScheme.onPrimaryContainer,
+      ),
+    );
+  }
+}
+
+class Clock extends StatefulWidget {
+  const Clock({Key? key}) : super(key: key);
+
+  @override
+  State<Clock> createState() => _ClockState();
+}
+
+class _ClockState extends State<Clock> {
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
+    return Container(
+      padding: const EdgeInsets.all(8.0),
+      width: size.width / 3,
+      height: size.height / 4,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        textBaseline: TextBaseline.ideographic,
+        children: <Widget>[
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "4月7日(金)",
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge
+                    ?.apply(color: Theme.of(context).colorScheme.background),
+              ),
+              Text(
+                "23:59",
+                style: Theme.of(context)
+                    .textTheme
+                    .displayLarge
+                    ?.apply(color: Theme.of(context).colorScheme.background),
+              ),
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  Icon(
+                    Icons.cloud,
+                    size: size.height / 20,
+                    color: Theme.of(context).colorScheme.background,
+                  ),
+                  Text(
+                    "18°",
+                    style: Theme.of(context).textTheme.titleLarge?.apply(
+                        color: Theme.of(context).colorScheme.background),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 6,
+              )
+            ],
+          )
+        ],
       ),
     );
   }

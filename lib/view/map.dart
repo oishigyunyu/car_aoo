@@ -3,14 +3,14 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class MapView extends StatefulWidget {
-  const MapView({Key? key}) : super(key: key);
+class GoogleMapView extends StatefulWidget {
+  const GoogleMapView({Key? key}) : super(key: key);
 
   @override
-  State<MapView> createState() => _MapViewState();
+  State<GoogleMapView> createState() => _GoogleMapViewState();
 }
 
-class _MapViewState extends State<MapView> {
+class _GoogleMapViewState extends State<GoogleMapView> {
   final CameraPosition _initialLocation =
       const CameraPosition(target: LatLng(0.0, 0.0));
   late GoogleMapController mapController;

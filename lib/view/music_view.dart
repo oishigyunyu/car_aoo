@@ -34,8 +34,8 @@ class MusicView extends StatelessWidget {
                     children: <Widget>[
                       Container(
                         padding: const EdgeInsets.all(8.0),
-                        width: size.width / 4,
-                        height: size.width / 4,
+                        width: size.width / 3,
+                        height: size.width / 3,
                         decoration: BoxDecoration(
                           image: const DecorationImage(
                             image: AssetImage(
@@ -45,22 +45,37 @@ class MusicView extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
-                      const SizedBox(
-                        width: 40.0,
+                      SizedBox(
+                        width: size.height / 6,
                       ),
                       Container(
                         padding: const EdgeInsets.all(8.0),
-                        width: size.width / 4,
-                        height: size.width / 4,
+                        width: size.width / 3,
+                        height: size.width / 3,
                         child: Center(
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const <Widget>[
-                              Text("Strobo"),
-                              Text("Vaundy"),
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Buttons(),
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Text(
+                                    "Strobo",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displaySmall,
+                                  ),
+                                  Text(
+                                    "Vaundy",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displaySmall,
+                                  ),
+                                ],
+                              ),
+                              const Buttons(
+                                size: 50,
                               ),
                             ],
                           ),
@@ -80,6 +95,7 @@ class MusicView extends StatelessWidget {
 
 class Buttons extends StatefulWidget {
   final double size;
+
   const Buttons({Key? key, this.size = 30.0}) : super(key: key);
 
   @override
@@ -109,6 +125,7 @@ class _ButtonsState extends State<Buttons> {
 
 class PlayButton extends StatefulWidget {
   final double size;
+
   const PlayButton({Key? key, required this.size}) : super(key: key);
 
   @override
@@ -117,19 +134,21 @@ class PlayButton extends StatefulWidget {
 
 class _PlayButtonState extends State<PlayButton> {
   bool isPressed = false;
-  IconData icon = Icons.play_arrow_outlined;
+  IconData icon = Icons.play_arrow_rounded;
+
   @override
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: () {
         isPressed = !isPressed;
         setState(() {
-          icon = isPressed ? Icons.pause : Icons.play_arrow_outlined;
+          icon = isPressed ? Icons.pause_rounded : Icons.play_arrow_rounded;
         });
       },
       icon: Icon(
         icon,
         size: widget.size,
+        color: Theme.of(context).colorScheme.surface,
       ),
     );
   }
@@ -137,6 +156,7 @@ class _PlayButtonState extends State<PlayButton> {
 
 class PlayBackButton extends StatefulWidget {
   final double size;
+
   const PlayBackButton({Key? key, required this.size}) : super(key: key);
 
   @override
@@ -149,8 +169,9 @@ class _PlayBackButtonState extends State<PlayBackButton> {
     return IconButton(
       onPressed: () {},
       icon: Icon(
-        Icons.skip_previous_outlined,
+        Icons.skip_previous_rounded,
         size: widget.size,
+        color: Theme.of(context).colorScheme.surface,
       ),
     );
   }
@@ -158,6 +179,7 @@ class _PlayBackButtonState extends State<PlayBackButton> {
 
 class SkipButton extends StatefulWidget {
   final double size;
+
   const SkipButton({Key? key, required this.size}) : super(key: key);
 
   @override
@@ -172,8 +194,9 @@ class _SkipButtonState extends State<SkipButton> {
         print('skipped');
       },
       icon: Icon(
-        Icons.skip_next_outlined,
+        Icons.skip_next_rounded,
         size: widget.size,
+        color: Theme.of(context).colorScheme.surface,
       ),
     );
   }
