@@ -93,23 +93,10 @@ class _ClockState extends State<Clock> {
     "Sat": DateTime.saturday,
     "Sun": DateTime.sunday,
   };
-  final _now = DateTime.now();
 
   String _time = "";
   String _weekDay = "";
   String _date = "";
-
-  String _getWeekDay() {
-    return _weekDays.keys.elementAt(DateTime.now().weekday);
-  }
-
-  String _getCurrentTime() {
-    return DateFormat.Hm().format(_now);
-  }
-
-  String _getCurrentDate() {
-    return DateFormat("MM/dd").format(_now);
-  }
 
   @override
   void initState() {
@@ -162,33 +149,51 @@ class _ClockState extends State<Clock> {
               ),
             ],
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  Icon(
-                    Icons.cloud,
-                    size: size.height / 20,
-                    color: Theme.of(context).colorScheme.background,
-                  ),
-                  Text(
-                    "18°",
-                    style: Theme.of(context).textTheme.titleLarge?.apply(
-                        color: Theme.of(context).colorScheme.background),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 6,
-              )
-            ],
-          )
+          const Weather(),
         ],
       ),
+    );
+  }
+}
+
+class Weather extends StatefulWidget {
+  const Weather({Key? key}) : super(key: key);
+
+  @override
+  State<Weather> createState() => _WeatherState();
+}
+
+class _WeatherState extends State<Weather> {
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: <Widget>[
+            Icon(
+              Icons.cloud,
+              size: size.height / 20,
+              color: Theme.of(context).colorScheme.background,
+            ),
+            Text(
+              "18°",
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge
+                  ?.apply(color: Theme.of(context).colorScheme.background),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 6,
+        )
+      ],
     );
   }
 }
