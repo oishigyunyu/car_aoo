@@ -96,9 +96,10 @@ class Menu extends StatelessWidget {
                                   .textTheme
                                   .headlineLarge
                                   ?.apply(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onPrimaryContainer),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimaryContainer,
+                                  ),
                             ),
                           ],
                         ),

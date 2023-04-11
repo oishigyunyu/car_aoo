@@ -26,7 +26,8 @@ class _TyreState extends State<Tyre> {
                 child: Text(
                   widget.tyreName,
                   style: Theme.of(context).textTheme.headlineSmall?.apply(
-                      color: Theme.of(context).colorScheme.onBackground),
+                        color: Theme.of(context).colorScheme.onBackground,
+                      ),
                 ),
               ),
               Align(

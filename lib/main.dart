@@ -14,13 +14,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: lightColorScheme,
-          fontFamily: "LINESeedJP"),
+        useMaterial3: true,
+        colorScheme: lightColorScheme,
+        fontFamily: "LINESeedJP",
+      ),
       darkTheme: ThemeData(
-          useMaterial3: true,
-          colorScheme: darkColorScheme,
-          fontFamily: "LINESeedJP"),
+        useMaterial3: true,
+        colorScheme: darkColorScheme,
+        fontFamily: "LINESeedJP",
+      ),
       home: const TopPage(),
     );
   }

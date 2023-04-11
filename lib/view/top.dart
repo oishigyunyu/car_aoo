@@ -135,17 +135,15 @@ class _ClockState extends State<Clock> {
             children: <Widget>[
               Text(
                 "$_date ($_weekDay)",
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge
-                    ?.apply(color: Theme.of(context).colorScheme.background),
+                style: Theme.of(context).textTheme.titleLarge?.apply(
+                      color: Theme.of(context).colorScheme.background,
+                    ),
               ),
               Text(
                 _time,
-                style: Theme.of(context)
-                    .textTheme
-                    .displayLarge
-                    ?.apply(color: Theme.of(context).colorScheme.background),
+                style: Theme.of(context).textTheme.displayLarge?.apply(
+                      color: Theme.of(context).colorScheme.background,
+                    ),
               ),
             ],
           ),
@@ -183,10 +181,9 @@ class _WeatherState extends State<Weather> {
             ),
             Text(
               "18°",
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge
-                  ?.apply(color: Theme.of(context).colorScheme.background),
+              style: Theme.of(context).textTheme.titleLarge?.apply(
+                    color: Theme.of(context).colorScheme.background,
+                  ),
             ),
           ],
         ),

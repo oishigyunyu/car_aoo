@@ -50,9 +50,10 @@ class _CameraViewState extends State<CameraView> {
                                     .textTheme
                                     .displayLarge
                                     ?.apply(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onPrimaryContainer),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimaryContainer,
+                                    ),
                               ),
                             ),
                           ),
