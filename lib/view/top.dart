@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:car_app/view/menu.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -93,16 +95,38 @@ class _ClockState extends State<Clock> {
   };
   final _now = DateTime.now();
 
+  String _time = "";
+  String _weekDay = "";
+  String _date = "";
+
   String _getWeekDay() {
     return _weekDays.keys.elementAt(DateTime.now().weekday);
   }
 
   String _getCurrentTime() {
-    return DateFormat("hh:mm").format(_now);
+    return DateFormat.Hm().format(_now);
   }
 
   String _getCurrentDate() {
     return DateFormat("MM/dd").format(_now);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Timer.periodic(const Duration(seconds: 1), _onTimer);
+  }
+
+  void _onTimer(Timer timer) {
+    var now = DateTime.now();
+    var timeString = DateFormat.Hm().format(now);
+    var dateString = DateFormat("MM/dd").format(now);
+    var weekDayString = _weekDays.keys.elementAt(now.weekday);
+    setState(() {
+      _time = timeString;
+      _date = dateString;
+      _weekDay = weekDayString;
+    });
   }
 
   @override
@@ -123,14 +147,14 @@ class _ClockState extends State<Clock> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                "${_getCurrentDate()} (${_getWeekDay()})",
+                "$_date ($_weekDay)",
                 style: Theme.of(context)
                     .textTheme
                     .titleLarge
                     ?.apply(color: Theme.of(context).colorScheme.background),
               ),
               Text(
-                _getCurrentTime(),
+                _time,
                 style: Theme.of(context)
                     .textTheme
                     .displayLarge
