@@ -1,5 +1,6 @@
 import 'package:car_app/view/menu.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TopPage extends StatefulWidget {
   const TopPage({super.key});
@@ -9,11 +10,6 @@ class TopPage extends StatefulWidget {
 }
 
 class _TopPage extends State<TopPage> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -86,6 +82,29 @@ class Clock extends StatefulWidget {
 }
 
 class _ClockState extends State<Clock> {
+  final Map<String, int> _weekDays = {
+    "Mon": DateTime.monday,
+    "Tue": DateTime.tuesday,
+    "Wed": DateTime.wednesday,
+    "Thu": DateTime.thursday,
+    "Fri": DateTime.friday,
+    "Sat": DateTime.saturday,
+    "Sun": DateTime.sunday,
+  };
+  final _now = DateTime.now();
+
+  String _getWeekDay() {
+    return _weekDays.keys.elementAt(DateTime.now().weekday);
+  }
+
+  String _getCurrentTime() {
+    return DateFormat("hh:mm").format(_now);
+  }
+
+  String _getCurrentDate() {
+    return DateFormat("MM/dd").format(_now);
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -104,14 +123,14 @@ class _ClockState extends State<Clock> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                "4月7日(金)",
+                "${_getCurrentDate()} (${_getWeekDay()})",
                 style: Theme.of(context)
                     .textTheme
                     .titleLarge
                     ?.apply(color: Theme.of(context).colorScheme.background),
               ),
               Text(
-                "23:59",
+                _getCurrentTime(),
                 style: Theme.of(context)
                     .textTheme
                     .displayLarge

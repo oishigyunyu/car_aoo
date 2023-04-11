@@ -167,6 +167,35 @@ class _GoogleMapViewState extends State<GoogleMapView> {
                   ),
                 ),
               ),
+              Align(
+                alignment: Alignment.center,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: Container(
+                    decoration: BoxDecoration(color: Colors.black38),
+                    width: size.width * 0.85,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Text(
+                            "Location Search",
+                            style: Theme.of(context).textTheme.titleSmall,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          TextField(
+                            controller: startAddressController,
+                            focusNode: startAddressFocusNode,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

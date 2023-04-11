@@ -38,8 +38,7 @@ class MusicView extends StatelessWidget {
                         height: size.width / 3,
                         decoration: BoxDecoration(
                           image: const DecorationImage(
-                            image: AssetImage(
-                                'assets/static/images/vaundy_strobo.jpg'),
+                            image: AssetImage('vaundy_strobo.jpg'),
                             fit: BoxFit.cover,
                           ),
                           borderRadius: BorderRadius.circular(8.0),
@@ -54,10 +53,10 @@ class MusicView extends StatelessWidget {
                         height: size.width / 3,
                         child: Center(
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
                               Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
                                   Text(

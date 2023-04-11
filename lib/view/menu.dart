@@ -2,8 +2,8 @@ import 'package:car_app/view/map.dart';
 import 'package:flutter/material.dart';
 
 import 'camera_view.dart';
-import 'information.dart';
 import 'music_view.dart';
+import 'tyre_information.dart';
 
 class Menu extends StatelessWidget {
   const Menu({Key? key}) : super(key: key);
@@ -66,16 +66,12 @@ class Menu extends StatelessWidget {
                         if (icons.keys.elementAt(index) == "Tyre Pressure") {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => const Information(),
+                              builder: (context) => const TyreInformation(),
                             ),
                           );
                         }
-                        if (icons.keys.elementAt(index) == "TyrePressure") {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => const Information(),
-                            ),
-                          );
+                        if (icons.keys.elementAt(index) == "Information") {
+                          print("sss");
                         }
                         if (icons.keys.elementAt(index) == "Home") {
                           Navigator.of(context).pop();
