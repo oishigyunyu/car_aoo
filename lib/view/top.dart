@@ -147,21 +147,21 @@ class _ClockState extends State<Clock> {
               ),
             ],
           ),
-          const Weather(),
+          const WeatherWidget(),
         ],
       ),
     );
   }
 }
 
-class Weather extends StatefulWidget {
-  const Weather({Key? key}) : super(key: key);
+class WeatherWidget extends StatefulWidget {
+  const WeatherWidget({Key? key}) : super(key: key);
 
   @override
-  State<Weather> createState() => _WeatherState();
+  State<WeatherWidget> createState() => _WeatherWidgetState();
 }
 
-class _WeatherState extends State<Weather> {
+class _WeatherWidgetState extends State<WeatherWidget> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
