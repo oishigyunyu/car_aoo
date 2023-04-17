@@ -9,6 +9,31 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  Widget _buildVertical(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return Scaffold(
+      body: SafeArea(
+        child: Container(
+          width: size.width,
+          height: size.height,
+          padding: const EdgeInsets.all(8.0),
+          child: Center(
+            child: Text(
+              "vertical is WIP",
+              style: Theme.of(context).textTheme.displayMedium,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHorizontal(BuildContext context) {
+    return const TopPage(
+      direction: "horizontal",
+    );
+  }
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -23,7 +48,13 @@ class MyApp extends StatelessWidget {
         colorScheme: darkColorScheme,
         fontFamily: "LINESeedJP",
       ),
-      home: const TopPage(),
+      home: LayoutBuilder(
+        builder: (context, constraints) {
+          return constraints.maxWidth < constraints.maxHeight
+              ? _buildVertical(context)
+              : _buildHorizontal(context);
+        },
+      ),
     );
   }
 }

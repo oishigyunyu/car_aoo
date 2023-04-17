@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class TopPage extends StatefulWidget {
-  const TopPage({super.key});
+  final String direction;
+  const TopPage({super.key, required this.direction});
 
   @override
   State<TopPage> createState() => _TopPage();
@@ -23,14 +24,16 @@ class _TopPage extends State<TopPage> {
           height: size.height,
           child: Ink.image(
             image: const AssetImage("assets/static/images/dash.jpeg"),
-            fit: BoxFit.fill,
+            fit: BoxFit.cover,
             child: InkWell(
               splashColor:
                   Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.5),
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => const Menu(),
+                    builder: (context) => Menu(
+                      direction: widget.direction,
+                    ),
                   ),
                 );
               },
@@ -123,7 +126,7 @@ class _ClockState extends State<Clock> {
     return Container(
       padding: const EdgeInsets.all(8.0),
       width: size.width / 3,
-      height: size.height / 4,
+      height: size.height / 4 + 10,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -141,7 +144,7 @@ class _ClockState extends State<Clock> {
               ),
               Text(
                 _time,
-                style: Theme.of(context).textTheme.displayLarge?.apply(
+                style: Theme.of(context).textTheme.displayMedium?.apply(
                       color: Theme.of(context).colorScheme.background,
                     ),
               ),

@@ -69,7 +69,7 @@ class TyreInformation extends StatelessWidget {
                                     tyrePos.keys.elementAt(i),
                                     style: Theme.of(context)
                                         .textTheme
-                                        .headlineSmall
+                                        .titleSmall
                                         ?.apply(
                                             color: Theme.of(context)
                                                 .colorScheme
@@ -83,7 +83,7 @@ class TyreInformation extends StatelessWidget {
                                         "ssss",
                                         style: Theme.of(context)
                                             .textTheme
-                                            .headlineLarge
+                                            .titleSmall
                                             ?.apply(
                                                 color: Theme.of(context)
                                                     .colorScheme
@@ -93,7 +93,7 @@ class TyreInformation extends StatelessWidget {
                                         "[kPa]",
                                         style: Theme.of(context)
                                             .textTheme
-                                            .headlineSmall
+                                            .titleSmall
                                             ?.apply(
                                                 color: Theme.of(context)
                                                     .colorScheme
@@ -119,7 +119,7 @@ class TyreInformation extends StatelessWidget {
                                         "Temp",
                                         style: Theme.of(context)
                                             .textTheme
-                                            .titleLarge
+                                            .labelMedium
                                             ?.apply(
                                                 color: Theme.of(context)
                                                     .colorScheme
@@ -136,7 +136,7 @@ class TyreInformation extends StatelessWidget {
                                             "123",
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .titleMedium
+                                                .labelSmall
                                                 ?.apply(
                                                     color: Theme.of(context)
                                                         .colorScheme
@@ -146,7 +146,7 @@ class TyreInformation extends StatelessWidget {
                                             "[℃]",
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .titleSmall
+                                                .labelSmall
                                                 ?.apply(
                                                     color: Theme.of(context)
                                                         .colorScheme

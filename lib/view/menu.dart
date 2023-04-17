@@ -6,7 +6,9 @@ import 'music_view.dart';
 import 'tyre_information.dart';
 
 class Menu extends StatelessWidget {
-  const Menu({Key? key}) : super(key: key);
+  final String direction;
+
+  const Menu({Key? key, required this.direction}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,9 @@ class Menu extends StatelessWidget {
           child: GridView.count(
             padding: const EdgeInsets.all(8.0),
             shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
+            scrollDirection: widget.direction == "vertical"
+                ? Axis.vertical
+                : Axis.horizontal,
             crossAxisCount: 2,
             children: <Widget>[
               for (int index = 0; index < icons.length; index++) ...{
@@ -94,7 +98,7 @@ class Menu extends StatelessWidget {
                               icons.keys.elementAt(index),
                               style: Theme.of(context)
                                   .textTheme
-                                  .headlineLarge
+                                  .titleMedium
                                   ?.apply(
                                     color: Theme.of(context)
                                         .colorScheme
