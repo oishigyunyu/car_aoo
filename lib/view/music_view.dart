@@ -38,7 +38,8 @@ class MusicView extends StatelessWidget {
                         height: size.width / 3,
                         decoration: BoxDecoration(
                           image: const DecorationImage(
-                            image: AssetImage('vaundy_strobo.jpg'),
+                            image: AssetImage(
+                                'assets/static/images/vaundy_strobo.jpg'),
                             fit: BoxFit.cover,
                           ),
                           borderRadius: BorderRadius.circular(8.0),

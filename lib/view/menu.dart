@@ -1,8 +1,9 @@
+import 'package:car_app/view/instrument.dart';
 import 'package:car_app/view/map.dart';
+import 'package:car_app/view/music_main.dart';
 import 'package:flutter/material.dart';
 
 import 'camera_view.dart';
-import 'music_view.dart';
 import 'tyre_information.dart';
 
 class Menu extends StatelessWidget {
@@ -34,9 +35,8 @@ class Menu extends StatelessWidget {
           child: GridView.count(
             padding: const EdgeInsets.all(8.0),
             shrinkWrap: true,
-            scrollDirection: widget.direction == "vertical"
-                ? Axis.vertical
-                : Axis.horizontal,
+            scrollDirection:
+                direction == "vertical" ? Axis.vertical : Axis.horizontal,
             crossAxisCount: 2,
             children: <Widget>[
               for (int index = 0; index < icons.length; index++) ...{
@@ -49,7 +49,7 @@ class Menu extends StatelessWidget {
                         if (icons.keys.elementAt(index) == "Music") {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => const MusicView(),
+                              builder: (context) => const MusicMain(),
                             ),
                           );
                         }
@@ -76,6 +76,13 @@ class Menu extends StatelessWidget {
                         }
                         if (icons.keys.elementAt(index) == "Information") {
                           print("sss");
+                        }
+                        if (icons.keys.elementAt(index) == "Instrument") {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const Instrument(),
+                            ),
+                          );
                         }
                         if (icons.keys.elementAt(index) == "Home") {
                           Navigator.of(context).pop();

@@ -31,6 +31,4 @@ class Detail {
   final String wind;
   final String wave;
   Detail({required this.weather, required this.wind, required this.wave});
-
-  factory Detail.fromJson(Map<String, dynamic> json) {}
 }
