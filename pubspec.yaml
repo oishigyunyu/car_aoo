@@ -69,6 +69,7 @@ flutter:
     - assets/static/images/vaundy_strobo.jpg
     - assets/static/images/car-top-view.png
     - assets/static/images/dash.jpeg
+    - assets/static/images/nissan_logo_white.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

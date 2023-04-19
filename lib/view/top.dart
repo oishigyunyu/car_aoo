@@ -23,11 +23,16 @@ class _TopPage extends State<TopPage> {
           width: size.width,
           height: size.height,
           child: Ink.image(
-            image: const AssetImage("assets/static/images/dash.jpeg"),
+            image: MediaQuery(
+              data: MediaQuery.of(context).copyWith(
+                invertColors: true,
+              )
+              child:  Image.asset("MediaQuery.of(context).copyWith(invertColors: true,)"),
+            ),
             fit: BoxFit.cover,
             child: InkWell(
               splashColor:
-                  Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.5),
+                  Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.9),
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -139,13 +144,13 @@ class _ClockState extends State<Clock> {
               Text(
                 "$_date ($_weekDay)",
                 style: Theme.of(context).textTheme.titleLarge?.apply(
-                      color: Theme.of(context).colorScheme.background,
+                      color: Theme.of(context).colorScheme.onBackground,
                     ),
               ),
               Text(
                 _time,
                 style: Theme.of(context).textTheme.displayMedium?.apply(
-                      color: Theme.of(context).colorScheme.background,
+                      color: Theme.of(context).colorScheme.onBackground,
                     ),
               ),
             ],
@@ -180,12 +185,12 @@ class _WeatherWidgetState extends State<WeatherWidget> {
             Icon(
               Icons.cloud,
               size: size.height / 20,
-              color: Theme.of(context).colorScheme.background,
+              color: Theme.of(context).colorScheme.onBackground,
             ),
             Text(
               "18°",
               style: Theme.of(context).textTheme.titleLarge?.apply(
-                    color: Theme.of(context).colorScheme.background,
+                    color: Theme.of(context).colorScheme.onBackground,
                   ),
             ),
           ],
