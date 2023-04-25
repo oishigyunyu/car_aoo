@@ -1,12 +1,23 @@
 import 'package:car_app/color_schemes.g.dart';
+import 'package:car_app/shared_preferences_instance.dart';
 import 'package:car_app/view/top.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-void main() {
-  runApp(const MyApp());
+final themeModeProvider = StateProvider<ThemeMode>((ref) => ThemeMode.system);
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SharedPreferencesInstance.initialize();
+
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   Widget _buildVertical(BuildContext context) {
@@ -34,20 +45,26 @@ class MyApp extends StatelessWidget {
     );
   }
 
+  ThemeData _buildTheme(Brightness brightness) {
+    final ColorScheme colorScheme;
+    if (brightness == Brightness.light) {
+      colorScheme = lightColorScheme;
+    } else if (brightness == Brightness.dark) {
+      colorScheme = darkColorScheme;
+    } else {
+      throw Error();
+    }
+    return ThemeData(
+        useMaterial3: true, colorScheme: colorScheme, fontFamily: "LINESeedJP");
+  }
+
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: lightColorScheme,
-        fontFamily: "LINESeedJP",
-      ),
-      darkTheme: ThemeData(
-        useMaterial3: true,
-        colorScheme: darkColorScheme,
-        fontFamily: "LINESeedJP",
-      ),
+      theme: _buildTheme(Brightness.light),
+      darkTheme: _buildTheme(Brightness.dark),
+      themeMode: ref.watch(themeModeProvider),
       home: LayoutBuilder(
         builder: (context, constraints) {
           return constraints.maxWidth < constraints.maxHeight

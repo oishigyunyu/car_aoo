@@ -23,12 +23,7 @@ class _TopPage extends State<TopPage> {
           width: size.width,
           height: size.height,
           child: Ink.image(
-            image: MediaQuery(
-              data: MediaQuery.of(context).copyWith(
-                invertColors: true,
-              )
-              child:  Image.asset("MediaQuery.of(context).copyWith(invertColors: true,)"),
-            ),
+            image: AssetImage("assets/static/images/nissan_logo_white.png"),
             fit: BoxFit.cover,
             child: InkWell(
               splashColor:
