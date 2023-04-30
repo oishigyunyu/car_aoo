@@ -1,6 +1,7 @@
 import 'package:car_app/view/instrument.dart';
 import 'package:car_app/view/map.dart';
 import 'package:car_app/view/music_main.dart';
+import 'package:car_app/view/settings.dart';
 import 'package:flutter/material.dart';
 
 import 'camera_view.dart';
@@ -86,6 +87,13 @@ class Menu extends StatelessWidget {
                         }
                         if (icons.keys.elementAt(index) == "Home") {
                           Navigator.of(context).pop();
+                        }
+                        if (icons.keys.elementAt(index) == "Settings") {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const Settings(),
+                            ),
+                          );
                         }
                       },
                       child: Padding(

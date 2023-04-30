@@ -108,6 +108,17 @@ class _GoogleMapViewState extends State<GoogleMapView> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       FloatingActionButton.large(
+                        heroTag: "search",
+                        onPressed: () {},
+                        child: Icon(Icons.search,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimaryContainer),
+                      ),
+                      SizedBox(
+                        height: size.height / 60,
+                      ),
+                      FloatingActionButton.large(
                         heroTag: "zoom-in",
                         onPressed: () {
                           mapController.animateCamera(

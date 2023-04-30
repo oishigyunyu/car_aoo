@@ -23,7 +23,8 @@ class _TopPage extends State<TopPage> {
           width: size.width,
           height: size.height,
           child: Ink.image(
-            image: AssetImage("assets/static/images/nissan_logo_white.png"),
+            image:
+                const AssetImage("assets/static/images/nissan_logo_white.png"),
             fit: BoxFit.cover,
             child: InkWell(
               splashColor:
@@ -88,13 +89,13 @@ class Clock extends StatefulWidget {
 
 class _ClockState extends State<Clock> {
   final Map<String, int> _weekDays = {
+    "Sun": DateTime.sunday,
     "Mon": DateTime.monday,
     "Tue": DateTime.tuesday,
     "Wed": DateTime.wednesday,
     "Thu": DateTime.thursday,
     "Fri": DateTime.friday,
     "Sat": DateTime.saturday,
-    "Sun": DateTime.sunday,
   };
 
   String _time = "";
@@ -111,7 +112,7 @@ class _ClockState extends State<Clock> {
     var now = DateTime.now();
     var timeString = DateFormat.Hm().format(now);
     var dateString = DateFormat("MM/dd").format(now);
-    var weekDayString = _weekDays.keys.elementAt(now.weekday);
+    var weekDayString = _weekDays.keys.elementAt(now.weekday - 1);
     setState(() {
       _time = timeString;
       _date = dateString;
