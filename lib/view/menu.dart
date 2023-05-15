@@ -5,6 +5,7 @@ import 'package:car_app/view/settings.dart';
 import 'package:flutter/material.dart';
 
 import 'camera_view.dart';
+import 'information.dart';
 import 'tyre_information.dart';
 
 class Menu extends StatelessWidget {
@@ -28,6 +29,7 @@ class Menu extends StatelessWidget {
     };
     final size = MediaQuery.of(context).size;
     const double thickness = 2.0;
+    print("direction: $direction");
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
@@ -36,8 +38,7 @@ class Menu extends StatelessWidget {
           child: GridView.count(
             padding: const EdgeInsets.all(8.0),
             shrinkWrap: true,
-            scrollDirection:
-                direction == "vertical" ? Axis.vertical : Axis.horizontal,
+            scrollDirection: direction == "v" ? Axis.vertical : Axis.horizontal,
             crossAxisCount: 2,
             children: <Widget>[
               for (int index = 0; index < icons.length; index++) ...{
@@ -76,7 +77,11 @@ class Menu extends StatelessWidget {
                           );
                         }
                         if (icons.keys.elementAt(index) == "Information") {
-                          print("sss");
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const Information(),
+                            ),
+                          );
                         }
                         if (icons.keys.elementAt(index) == "Instrument") {
                           Navigator.of(context).push(

@@ -1,31 +1,57 @@
 import 'dart:async';
 
+import 'package:car_app/theme_mode_provider.dart';
 import 'package:car_app/view/menu.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-class TopPage extends StatefulWidget {
-  final String direction;
-  const TopPage({super.key, required this.direction});
+class TopView extends ConsumerWidget {
+  final String axis;
+  const TopView({Key? key, required this.axis}) : super(key: key);
 
   @override
-  State<TopPage> createState() => _TopPage();
-}
-
-class _TopPage extends State<TopPage> {
-  @override
-  Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-
-    return SafeArea(
-      child: Scaffold(
-        body: SizedBox(
-          width: size.width,
-          height: size.height,
-          child: Ink.image(
-            image:
-                const AssetImage("assets/static/images/nissan_logo_white.png"),
-            fit: BoxFit.cover,
+  Widget build(BuildContext context, WidgetRef ref) {
+    final size = MediaQuery.of(context).size;
+    StateController<ThemeMode> themeMode = ref.read(themeModeProvider.notifier);
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Brightness Demo"),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: PopupMenuButton<ThemeMode>(
+              icon: const Icon(
+                Icons.settings_brightness,
+              ),
+              // themeMode.state に選択された 外観モード をセットする
+              onSelected: (ThemeMode selectedThemeMode) =>
+                  themeMode.state = selectedThemeMode,
+              itemBuilder: (context) => <PopupMenuEntry<ThemeMode>>[
+                const PopupMenuItem(
+                  value: ThemeMode.system,
+                  child: Text('システム設定に従う'),
+                ),
+                const PopupMenuItem(
+                  value: ThemeMode.light,
+                  child: Text('ライトモード'),
+                ),
+                const PopupMenuItem(
+                  value: ThemeMode.dark,
+                  child: Text('ダークモード'),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+      body: SizedBox(
+        width: size.width,
+        height: size.height,
+        child: Ink.image(
+          image: const AssetImage("assets/static/images/nissan_logo_white.png"),
+          fit: BoxFit.cover,
+          child: SafeArea(
             child: InkWell(
               splashColor:
                   Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.9),
@@ -33,13 +59,13 @@ class _TopPage extends State<TopPage> {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => Menu(
-                      direction: widget.direction,
+                      direction: axis,
                     ),
                   ),
                 );
               },
-              child: Stack(
-                children: const <Widget>[
+              child: const Stack(
+                children: <Widget>[
                   Align(
                     alignment: Alignment.topLeft,
                     child: Padding(
@@ -89,13 +115,13 @@ class Clock extends StatefulWidget {
 
 class _ClockState extends State<Clock> {
   final Map<String, int> _weekDays = {
-    "Sun": DateTime.sunday,
     "Mon": DateTime.monday,
     "Tue": DateTime.tuesday,
     "Wed": DateTime.wednesday,
     "Thu": DateTime.thursday,
     "Fri": DateTime.friday,
     "Sat": DateTime.saturday,
+    "Sun": DateTime.sunday,
   };
 
   String _time = "";
@@ -112,7 +138,7 @@ class _ClockState extends State<Clock> {
     var now = DateTime.now();
     var timeString = DateFormat.Hm().format(now);
     var dateString = DateFormat("MM/dd").format(now);
-    var weekDayString = _weekDays.keys.elementAt(now.weekday - 1);
+    var weekDayString = _weekDays.keys.elementAt(now.weekday);
     setState(() {
       _time = timeString;
       _date = dateString;
@@ -151,7 +177,6 @@ class _ClockState extends State<Clock> {
               ),
             ],
           ),
-          const WeatherWidget(),
         ],
       ),
     );

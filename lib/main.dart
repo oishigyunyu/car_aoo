@@ -1,14 +1,14 @@
 import 'package:car_app/color_schemes.g.dart';
-import 'package:car_app/shared_preferences_instance.dart';
 import 'package:car_app/view/top.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final themeModeProvider = StateProvider<ThemeMode>((ref) => ThemeMode.system);
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await SharedPreferencesInstance.initialize();
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
   runApp(
     const ProviderScope(
@@ -22,49 +22,43 @@ class MyApp extends ConsumerWidget {
 
   Widget _buildVertical(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: SafeArea(
-        child: Container(
-          width: size.width,
-          height: size.height,
-          padding: const EdgeInsets.all(8.0),
-          child: Center(
-            child: Text(
-              "vertical is WIP",
-              style: Theme.of(context).textTheme.displayMedium,
-            ),
-          ),
-        ),
-      ),
+    return const TopView(
+      axis: "v",
     );
   }
 
   Widget _buildHorizontal(BuildContext context) {
-    return const TopPage(
-      direction: "horizontal",
+    return const TopView(
+      axis: "h",
     );
   }
 
   ThemeData _buildTheme(Brightness brightness) {
-    final ColorScheme colorScheme;
     if (brightness == Brightness.light) {
-      colorScheme = lightColorScheme;
+      return ThemeData(
+        useMaterial3: true,
+        colorScheme: lightColorScheme,
+        fontFamily: "LINESeedJP",
+      );
     } else if (brightness == Brightness.dark) {
-      colorScheme = darkColorScheme;
+      return ThemeData(
+        useMaterial3: true,
+        colorScheme: darkColorScheme,
+        fontFamily: "LINESeedJP",
+      );
     } else {
       throw Error();
     }
-    return ThemeData(
-        useMaterial3: true, colorScheme: colorScheme, fontFamily: "LINESeedJP");
   }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeModeProvider.notifier);
     return MaterialApp(
       theme: _buildTheme(Brightness.light),
       darkTheme: _buildTheme(Brightness.dark),
-      themeMode: ref.watch(themeModeProvider),
+      themeMode: themeMode.state,
       home: LayoutBuilder(
         builder: (context, constraints) {
           return constraints.maxWidth < constraints.maxHeight

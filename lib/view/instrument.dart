@@ -12,10 +12,17 @@ class Instrument extends StatefulWidget {
 
 class _InstrumentState extends State<Instrument> {
   int _deg = 0;
+  Timer? timer;
   @override
   void initState() {
     super.initState();
-    Timer.periodic(const Duration(milliseconds: 100), _onTimer);
+    timer = Timer.periodic(const Duration(milliseconds: 100), _onTimer);
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 
   @override
