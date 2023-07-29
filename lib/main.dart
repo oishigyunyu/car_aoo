@@ -1,25 +1,18 @@
 import 'package:car_app/color_schemes.g.dart';
 import 'package:car_app/view/top.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final themeModeProvider = StateProvider<ThemeMode>((ref) => ThemeMode.system);
-
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-
+main() {
   runApp(
-    const ProviderScope(
-      child: MyApp(),
+    const MaterialApp(
+      home: MyApp(),
     ),
   );
 }
 
-class MyApp extends ConsumerWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  
+
   ThemeData _buildTheme(Brightness brightness) {
     if (brightness == Brightness.light) {
       return ThemeData(
@@ -40,16 +33,35 @@ class MyApp extends ConsumerWidget {
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final themeMode = ref.watch(themeModeProvider.notifier);
-    return MaterialApp(
-      theme: _buildTheme(Brightness.light),
-      darkTheme: _buildTheme(Brightness.dark),
-      themeMode: themeMode.state,
-      home: LayoutBuilder(
-        builder: (context, constraints) {
-          return const TopView(axis: "v");
-        },
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return Scaffold(
+      body: Container(
+        width: size.width,
+        height: size.height,
+        color: Colors.grey,
+        child: SafeArea(
+          child: Stack(
+            children: <Widget>[
+              const Align(
+                alignment: Alignment.center,
+                child: Clock(),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Swipe up the screen",
+                    style: Theme.of(context).textTheme.titleMedium?.apply(
+                          color: Theme.of(context).colorScheme.onBackground,
+                        ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
