@@ -15,74 +15,25 @@ class TopView extends ConsumerWidget {
     final size = MediaQuery.of(context).size;
     StateController<ThemeMode> themeMode = ref.read(themeModeProvider.notifier);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Brightness Demo"),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: PopupMenuButton<ThemeMode>(
-              icon: const Icon(
-                Icons.settings_brightness,
-              ),
-              // themeMode.state に選択された 外観モード をセットする
-              onSelected: (ThemeMode selectedThemeMode) =>
-                  themeMode.state = selectedThemeMode,
-              itemBuilder: (context) => <PopupMenuEntry<ThemeMode>>[
-                const PopupMenuItem(
-                  value: ThemeMode.system,
-                  child: Text('システム設定に従う'),
-                ),
-                const PopupMenuItem(
-                  value: ThemeMode.light,
-                  child: Text('ライトモード'),
-                ),
-                const PopupMenuItem(
-                  value: ThemeMode.dark,
-                  child: Text('ダークモード'),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-      body: SizedBox(
+      body: Container(
         width: size.width,
         height: size.height,
-        child: Ink.image(
-          image: const AssetImage("assets/static/images/nissan_logo_white.png"),
-          fit: BoxFit.cover,
-          child: SafeArea(
-            child: InkWell(
-              splashColor:
-                  Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.9),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => Menu(
-                      direction: axis,
-                    ),
-                  ),
-                );
-              },
-              child: const Stack(
-                children: <Widget>[
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: SleepButton(),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Clock(),
-                    ),
-                  )
-                ],
+        color: Colors.grey,
+        child: SafeArea(
+          child: Stack(
+            children: <Widget>[
+              const Align(
+                alignment: Alignment.center,
+                child: Clock(),
               ),
-            ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Text("Swipe up the screen",style: Theme.of(context).textTheme.displayMedium?.apply(
+                  color: Theme.of(context).colorScheme.onBackground,
+                ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -152,32 +103,16 @@ class _ClockState extends State<Clock> {
 
     return Container(
       padding: const EdgeInsets.all(8.0),
-      width: size.width / 3,
-      height: size.height / 4 + 10,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        textBaseline: TextBaseline.ideographic,
-        children: <Widget>[
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                "$_date ($_weekDay)",
-                style: Theme.of(context).textTheme.titleLarge?.apply(
-                      color: Theme.of(context).colorScheme.onBackground,
-                    ),
-              ),
-              Text(
-                _time,
-                style: Theme.of(context).textTheme.displayMedium?.apply(
-                      color: Theme.of(context).colorScheme.onBackground,
-                    ),
-              ),
-            ],
+      width: size.width * 3 / 4,
+      height: size.height / 8,
+      color: Colors.cyan,
+      child: Center(
+        child: Text(
+          _time,
+          style: Theme.of(context).textTheme.displayMedium?.apply(
+            color: Theme.of(context).colorScheme.onBackground,
           ),
-        ],
+        ),
       ),
     );
   }

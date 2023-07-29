@@ -19,20 +19,7 @@ Future<void> main() async {
 
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
-
-  Widget _buildVertical(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    return const TopView(
-      axis: "v",
-    );
-  }
-
-  Widget _buildHorizontal(BuildContext context) {
-    return const TopView(
-      axis: "h",
-    );
-  }
-
+  
   ThemeData _buildTheme(Brightness brightness) {
     if (brightness == Brightness.light) {
       return ThemeData(
@@ -61,9 +48,7 @@ class MyApp extends ConsumerWidget {
       themeMode: themeMode.state,
       home: LayoutBuilder(
         builder: (context, constraints) {
-          return constraints.maxWidth < constraints.maxHeight
-              ? _buildVertical(context)
-              : _buildHorizontal(context);
+          return const TopView(axis: "v");
         },
       ),
     );
