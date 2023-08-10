@@ -10,8 +10,8 @@ import 'camera_view.dart';
 import 'information_view.dart';
 import 'tyre_information.dart';
 
-class Menu extends StatelessWidget {
-  const Menu({Key? key}) : super(key: key);
+class MenuView extends StatelessWidget {
+  const MenuView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
