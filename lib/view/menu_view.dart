@@ -1,4 +1,7 @@
+import 'dart:collection';
+
 import 'package:car_app/view/instrument_view.dart';
+import 'package:car_app/view/maintenance_view.dart';
 import 'package:car_app/view/map_view.dart';
 import 'package:car_app/view/music_main_view.dart';
 import 'package:car_app/view/settings_view.dart';
@@ -39,33 +42,42 @@ class Menu extends StatelessWidget {
                     color: Theme.of(context).colorScheme.primaryContainer,
                     child: InkWell(
                       onTap: () {
-                        if (icons.keys.elementAt(index) == "Music") {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => const MusicMainView(),
-                            ),
-                          );
-                        }
-                        if (icons.keys.elementAt(index) == "Map") {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => const GoogleMapView(),
-                            ),
-                          );
-                        }
-                        if (icons.keys.elementAt(index) == "Information") {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => const InformationView(),
-                            ),
-                          );
-                        }
-                        if (icons.keys.elementAt(index) == "Settings") {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => const SettingsView(),
-                            ),
-                          );
+                        switch (icons.keys.elementAt(index)) {
+                          case ('Music'):
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const MusicMainView(),
+                              ),
+                            );
+                            break;
+                          case ('Map'):
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const GoogleMapView(),
+                              ),
+                            );
+                            break;
+                          case ('Information'):
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const InformationView(),
+                              ),
+                            );
+                            break;
+                          case ('Settings'):
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const SettingsView(),
+                              ),
+                            );
+                            break;
+                          case ('Maintenance'):
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const MaintenanceView(),
+                              ),
+                            );
+                            break;
                         }
                       },
                       child: Padding(
@@ -83,14 +95,12 @@ class Menu extends StatelessWidget {
                             ),
                             Text(
                               icons.keys.elementAt(index),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge
-                                  ?.apply(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onPrimaryContainer,
-                                  ),
+                              style:
+                                  Theme.of(context).textTheme.titleLarge?.apply(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimaryContainer,
+                                      ),
                             ),
                           ],
                         ),
