@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 
 import '../main.dart';
 import '../utils/theme_mode_provider.dart';
-import 'menu.dart';
+import 'menu_view.dart';
 
 class Clock extends StatefulWidget {
   const Clock({Key? key}) : super(key: key);

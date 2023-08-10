@@ -1,10 +1,10 @@
-import 'package:car_app/view/instrument.dart';
-import 'package:car_app/view/map.dart';
-import 'package:car_app/view/music_main.dart';
-import 'package:car_app/view/settings.dart';
+import 'package:car_app/view/instrument_view.dart';
+import 'package:car_app/view/map_view.dart';
+import 'package:car_app/view/music_main_view.dart';
+import 'package:car_app/view/settings_view.dart';
 import 'package:flutter/material.dart';
 import 'camera_view.dart';
-import 'information.dart';
+import 'information_view.dart';
 import 'tyre_information.dart';
 
 class Menu extends StatelessWidget {
@@ -42,7 +42,7 @@ class Menu extends StatelessWidget {
                         if (icons.keys.elementAt(index) == "Music") {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => const MusicMain(),
+                              builder: (context) => const MusicMainView(),
                             ),
                           );
                         }
@@ -56,14 +56,14 @@ class Menu extends StatelessWidget {
                         if (icons.keys.elementAt(index) == "Information") {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => const Information(),
+                              builder: (context) => const InformationView(),
                             ),
                           );
                         }
                         if (icons.keys.elementAt(index) == "Settings") {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => const Settings(),
+                              builder: (context) => const SettingsView(),
                             ),
                           );
                         }

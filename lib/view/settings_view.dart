@@ -2,13 +2,8 @@ import 'package:car_app/utils/theme_mode_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class Settings extends StatefulWidget {
-  const Settings({Key? key}) : super(key: key);
-  @override
-  State<Settings> createState() => _SettingsState();
-}
-
-class _SettingsState extends State<Settings> {
+class SettingsView extends StatelessWidget {
+  const SettingsView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -26,7 +21,6 @@ class _SettingsState extends State<Settings> {
     );
   }
 }
-
 
 class ThemeModeTile extends ConsumerWidget {
   const ThemeModeTile({super.key});
