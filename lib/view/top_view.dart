@@ -81,7 +81,6 @@ class _ClockState extends State<Clock> {
 
     return Container(
       padding: const EdgeInsets.all(8.0),
-      color: Colors.cyan,
       child: Center(
         child: Text(
           _time,

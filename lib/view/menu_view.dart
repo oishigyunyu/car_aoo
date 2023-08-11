@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:car_app/view/fire_store_count_view.dart';
 import 'package:car_app/view/instrument_view.dart';
 import 'package:car_app/view/maintenance_view.dart';
 import 'package:car_app/view/map_view.dart';
@@ -21,6 +22,7 @@ class MenuView extends StatelessWidget {
       "Maintenance": Icons.car_repair_outlined,
       "Music": Icons.music_note_outlined,
       "Settings": Icons.settings,
+      "FireStore": Icons.local_fire_department_outlined,
     };
     final size = MediaQuery.of(context).size;
     const double thickness = 2.0;
@@ -75,6 +77,13 @@ class MenuView extends StatelessWidget {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) => const MaintenanceView(),
+                              ),
+                            );
+                            break;
+                          case ('FireStore'):
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const FireStoreView(),
                               ),
                             );
                             break;
