@@ -58,10 +58,9 @@ class _FuelRecordState extends State<FuelRecord> {
               TextField(
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    hintText: '給油量',
+                  border: InputBorder.none,
+                  hintText: '給油量',
                 ),
-                autofocus: true,
                 onChanged: (value) => _fuelQuantity = value as double,
               ),
               TextField(
@@ -70,7 +69,6 @@ class _FuelRecordState extends State<FuelRecord> {
                   border: InputBorder.none,
                   hintText: 'ガソリン単価',
                 ),
-                autofocus: true,
                 onChanged: (value) => _unitPrice = value as double,
               ),
             ],
