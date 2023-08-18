@@ -23,7 +23,7 @@ class TopView extends ConsumerWidget {
         child: Container(
           width: size.width,
           height: size.height,
-          color: Colors.grey,
+          color: Theme.of(context).colorScheme.background,
           child: SafeArea(
             child: Stack(
               children: <Widget>[
@@ -85,7 +85,7 @@ class _ClockState extends State<Clock> {
         child: Text(
           _time,
           style: Theme.of(context).textTheme.displayMedium?.apply(
-            color: Theme.of(context).colorScheme.onPrimary,
+            color: Theme.of(context).colorScheme.onBackground,
           ),
         ),
       ),
