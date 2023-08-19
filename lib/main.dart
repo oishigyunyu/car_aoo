@@ -2,11 +2,13 @@ import 'package:car_app/color_schemes.g.dart';
 import 'package:car_app/utils/shared_preferences_instances.dart';
 import 'package:car_app/utils/theme_mode_provider.dart';
 import 'package:car_app/view/top_view.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'firebase_options.dart';
+
+final db = FirebaseFirestore.instance;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

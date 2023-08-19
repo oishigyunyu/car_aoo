@@ -1,6 +1,23 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:intl/intl.dart';
+
+import '../main.dart';
+
+class FuelRecordModel {
+  FuelRecordModel(
+      {required this.date,
+      required this.fuelQuantity,
+      required this.unitPrice,
+      required this.droveDistanceFromLastRefuel});
+
+  final DateTime date;
+  final double fuelQuantity;
+  final double unitPrice;
+  final double droveDistanceFromLastRefuel;
+  late final DateTime createdAt = DateTime.now();
+}
 
 class FuelRecord extends StatefulWidget {
   const FuelRecord({super.key});
@@ -14,7 +31,7 @@ class _FuelRecordState extends State<FuelRecord> {
   final DateFormat _dateFormat = DateFormat('yyyy年MM月dd日');
   double _fuelQuantity = 0.0;
   double _unitPrice = 0.0;
-  double _drivedDistanceFromLastRefuel = 0.0;
+  double _droveDistanceFromLastRefuel = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -61,11 +78,6 @@ class _FuelRecordState extends State<FuelRecord> {
                             _date = date;
                           });
                         },
-                        onConfirm: (date) {
-                          setState(() {
-                            _date = date;
-                          });
-                        },
                         currentTime: DateTime.now(),
                         locale: LocaleType.jp,
                       );
@@ -94,7 +106,7 @@ class _FuelRecordState extends State<FuelRecord> {
                 ),
                 onChanged: (value) {
                   setState(() {
-                    _fuelQuantity = value as double;
+                    _fuelQuantity = double.parse(value);
                   });
                 },
               ),
@@ -114,7 +126,7 @@ class _FuelRecordState extends State<FuelRecord> {
                 ),
                 onChanged: (value) {
                   setState(() {
-                    _unitPrice = value as double;
+                    _unitPrice = double.parse(value);
                   });
                 },
               ),
@@ -134,7 +146,7 @@ class _FuelRecordState extends State<FuelRecord> {
                 ),
                 onChanged: (value) {
                   setState(() {
-                    _drivedDistanceFromLastRefuel = value as double;
+                    _droveDistanceFromLastRefuel = double.parse(value);
                   });
                 },
               ),
@@ -147,10 +159,19 @@ class _FuelRecordState extends State<FuelRecord> {
                   ),
                 ),
                 onPressed: () {
+                  FuelRecordModel dto = FuelRecordModel(
+                      date: _date,
+                      fuelQuantity: _fuelQuantity,
+                      unitPrice: _unitPrice,
+                      droveDistanceFromLastRefuel:
+                          _droveDistanceFromLastRefuel);
+
                   showDialog<void>(
                       context: context,
                       builder: (_) {
-                        return const AlertDialogWidget();
+                        return AlertDialogWidget(
+                          dto: dto,
+                        );
                       });
                 },
                 child: Text(
@@ -170,7 +191,20 @@ class _FuelRecordState extends State<FuelRecord> {
 }
 
 class AlertDialogWidget extends StatelessWidget {
-  const AlertDialogWidget({Key? key}) : super(key: key);
+  const AlertDialogWidget({Key? key, required this.dto}) : super(key: key);
+
+  final FuelRecordModel dto;
+
+  Future<void> _addRecord(FuelRecordModel dto) async {
+    final collectionRef = db.collection('CAR_MAINTENANCE').doc('REFUEL_RECORD').collection('RECORDS');
+    await collectionRef.doc().set({
+      'refuelDate': dto.date,
+      'fuelQuantity': dto.fuelQuantity,
+      'unitPrice': dto.unitPrice,
+      'droveDistanceFromLastRefuel': dto.droveDistanceFromLastRefuel,
+      'createdAt': DateTime.now()
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -211,7 +245,14 @@ class AlertDialogWidget extends StatelessWidget {
                 .bodyLarge
                 ?.apply(color: Theme.of(context).colorScheme.onBackground),
           ),
-          onTap: () {},
+          onTap: () {
+            _addRecord(dto)
+                .then((value) {
+                  print('data added');
+                  Navigator.pop(context);
+                })
+                .catchError((error) => 'failed to add data: $error');
+          },
         )
       ],
     );
