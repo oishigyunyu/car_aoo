@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:intl/intl.dart';
 
@@ -148,10 +147,14 @@ class _FuelRecordState extends State<FuelRecord> {
                   ),
                 ),
                 onPressed: () {
-                  print('submitted');
+                  showDialog<void>(
+                      context: context,
+                      builder: (_) {
+                        return const AlertDialogWidget();
+                      });
                 },
                 child: Text(
-                  'submit',
+                  '登録',
                   style: Theme.of(context)
                       .textTheme
                       .labelMedium
@@ -162,6 +165,55 @@ class _FuelRecordState extends State<FuelRecord> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class AlertDialogWidget extends StatelessWidget {
+  const AlertDialogWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      backgroundColor: Theme.of(context).colorScheme.background,
+      title: Text(
+        '登録します。',
+        style: Theme.of(context)
+            .textTheme
+            .headlineSmall
+            ?.apply(color: Theme.of(context).colorScheme.onBackground),
+      ),
+      content: Text(
+        'よろしいですか？',
+        style: Theme.of(context)
+            .textTheme
+            .bodyLarge
+            ?.apply(color: Theme.of(context).colorScheme.onBackground),
+      ),
+      actions: <Widget>[
+        GestureDetector(
+          child: Text(
+            'いいえ',
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge
+                ?.apply(color: Theme.of(context).colorScheme.onBackground),
+          ),
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
+        GestureDetector(
+          child: Text(
+            'はい',
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge
+                ?.apply(color: Theme.of(context).colorScheme.onBackground),
+          ),
+          onTap: () {},
+        )
+      ],
     );
   }
 }
