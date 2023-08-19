@@ -27,6 +27,8 @@ class FuelRecord extends StatefulWidget {
 }
 
 class _FuelRecordState extends State<FuelRecord> {
+  final _formKey = GlobalKey<FormState>();
+
   DateTime _date = DateTime.now();
   final DateFormat _dateFormat = DateFormat('yyyy年MM月dd日');
   double _fuelQuantity = 0.0;
@@ -44,145 +46,167 @@ class _FuelRecordState extends State<FuelRecord> {
           width: size.width,
           padding: const EdgeInsets.all(8.0),
           color: Theme.of(context).colorScheme.background,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    _dateFormat.format(_date),
-                    style: Theme.of(context).textTheme.labelLarge?.apply(
-                          color: Theme.of(context).colorScheme.onBackground,
-                        ),
-                  ),
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.secondary,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10.0),
-                        ),
-                      ),
-                    ),
-                    onPressed: () {
-                      DatePicker.showDatePicker(
-                        context,
-                        showTitleActions: true,
-                        minTime: DateTime(2023, 1, 1),
-                        maxTime: DateTime(2099, 12, 31),
-                        onChanged: (date) {
-                          setState(() {
-                            _date = date;
-                          });
-                        },
-                        currentTime: DateTime.now(),
-                        locale: LocaleType.jp,
-                      );
-                    },
-                    child: Text(
-                      '日付を選択',
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      _dateFormat.format(_date),
                       style: Theme.of(context).textTheme.labelLarge?.apply(
-                          color: Theme.of(context).colorScheme.onSecondary),
+                            color: Theme.of(context).colorScheme.onBackground,
+                          ),
                     ),
-                  ),
-                ],
-              ),
-              TextField(
-                style: Theme.of(context).textTheme.labelLarge?.apply(
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  fillColor: Theme.of(context).colorScheme.primary,
-                  filled: true,
-                  border: const OutlineInputBorder(),
-                  hintText: '給油量[L]',
-                  hintStyle: Theme.of(context).textTheme.labelLarge?.apply(
-                        color: Theme.of(context).colorScheme.onPrimary,
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        backgroundColor:
+                            Theme.of(context).colorScheme.secondary,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10.0),
+                          ),
+                        ),
                       ),
-                ),
-                onChanged: (value) {
-                  setState(() {
-                    _fuelQuantity = double.parse(value);
-                  });
-                },
-              ),
-              TextField(
-                style: Theme.of(context).textTheme.labelLarge?.apply(
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  fillColor: Theme.of(context).colorScheme.primary,
-                  filled: true,
-                  border: const OutlineInputBorder(),
-                  hintText: '単価[円/L]',
-                  hintStyle: Theme.of(context).textTheme.labelLarge?.apply(
-                        color: Theme.of(context).colorScheme.onPrimary,
-                      ),
-                ),
-                onChanged: (value) {
-                  setState(() {
-                    _unitPrice = double.parse(value);
-                  });
-                },
-              ),
-              TextField(
-                style: Theme.of(context).textTheme.labelLarge?.apply(
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  fillColor: Theme.of(context).colorScheme.primary,
-                  filled: true,
-                  border: const OutlineInputBorder(),
-                  hintText: '前回給油からの走行距離[km]',
-                  hintStyle: Theme.of(context).textTheme.labelLarge?.apply(
-                        color: Theme.of(context).colorScheme.onPrimary,
-                      ),
-                ),
-                onChanged: (value) {
-                  setState(() {
-                    _droveDistanceFromLastRefuel = double.parse(value);
-                  });
-                },
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.secondary,
-                  foregroundColor: Theme.of(context).colorScheme.onSecondary,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                ),
-                onPressed: () {
-                  FuelRecordModel dto = FuelRecordModel(
-                      date: _date,
-                      fuelQuantity: _fuelQuantity,
-                      unitPrice: _unitPrice,
-                      droveDistanceFromLastRefuel:
-                          _droveDistanceFromLastRefuel);
-
-                  showDialog<void>(
-                      context: context,
-                      builder: (_) {
-                        return AlertDialogWidget(
-                          dto: dto,
+                      onPressed: () {
+                        DatePicker.showDatePicker(
+                          context,
+                          showTitleActions: true,
+                          minTime: DateTime(2023, 1, 1),
+                          maxTime: DateTime(2099, 12, 31),
+                          onChanged: (date) {
+                            setState(() {
+                              _date = date;
+                            });
+                          },
+                          currentTime: DateTime.now(),
+                          locale: LocaleType.jp,
                         );
-                      });
-                },
-                child: Text(
-                  '登録',
-                  style: Theme.of(context)
-                      .textTheme
-                      .labelMedium
-                      ?.apply(color: Theme.of(context).colorScheme.onSecondary),
+                      },
+                      child: Text(
+                        '日付を選択',
+                        style: Theme.of(context).textTheme.labelLarge?.apply(
+                            color: Theme.of(context).colorScheme.onSecondary),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
+                TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return '給油量を正しく入力してください';
+                    }
+                    return null;
+                  },
+                  style: Theme.of(context).textTheme.labelLarge?.apply(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    fillColor: Theme.of(context).colorScheme.primary,
+                    filled: true,
+                    border: const OutlineInputBorder(),
+                    hintText: '給油量[L]',
+                    hintStyle: Theme.of(context).textTheme.labelLarge?.apply(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
+                  ),
+                  onChanged: (value) {
+                    setState(() {
+                      _fuelQuantity = double.tryParse(value) ?? 0.0;
+                    });
+                  },
+                ),
+                TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return '単価を正しく入力してください';
+                    }
+                    return null;
+                  },
+                  style: Theme.of(context).textTheme.labelLarge?.apply(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    fillColor: Theme.of(context).colorScheme.primary,
+                    filled: true,
+                    border: const OutlineInputBorder(),
+                    hintText: '単価[円/L]',
+                    hintStyle: Theme.of(context).textTheme.labelLarge?.apply(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
+                  ),
+                  onChanged: (value) {
+                    setState(() {
+                      _unitPrice = double.parse(value);
+                    });
+                  },
+                ),
+                TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return '走行距離を正しく入力してください';
+                    }
+                    return null;
+                  },
+                  style: Theme.of(context).textTheme.labelLarge?.apply(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    fillColor: Theme.of(context).colorScheme.primary,
+                    filled: true,
+                    border: const OutlineInputBorder(),
+                    hintText: '前回給油からの走行距離[km]',
+                    hintStyle: Theme.of(context).textTheme.labelLarge?.apply(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
+                  ),
+                  onChanged: (value) {
+                    setState(() {
+                      _droveDistanceFromLastRefuel = double.parse(value);
+                    });
+                  },
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Theme.of(context).colorScheme.secondary,
+                    foregroundColor: Theme.of(context).colorScheme.onSecondary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      FuelRecordModel dto = FuelRecordModel(
+                          date: _date,
+                          fuelQuantity: _fuelQuantity,
+                          unitPrice: _unitPrice,
+                          droveDistanceFromLastRefuel:
+                              _droveDistanceFromLastRefuel);
+
+                      showDialog<void>(
+                          context: context,
+                          builder: (_) {
+                            return AlertDialogWidget(
+                              dto: dto,
+                            );
+                          });
+                    }
+                  },
+                  child: Text(
+                    '登録',
+                    style: Theme.of(context).textTheme.labelMedium?.apply(
+                        color: Theme.of(context).colorScheme.onSecondary),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -196,7 +220,10 @@ class AlertDialogWidget extends StatelessWidget {
   final FuelRecordModel dto;
 
   Future<void> _addRecord(FuelRecordModel dto) async {
-    final collectionRef = db.collection('CAR_MAINTENANCE').doc('REFUEL_RECORD').collection('RECORDS');
+    final collectionRef = db
+        .collection('CAR_MAINTENANCE')
+        .doc('REFUEL_RECORD')
+        .collection('RECORDS');
     await collectionRef.doc().set({
       'refuelDate': dto.date,
       'fuelQuantity': dto.fuelQuantity,
@@ -246,12 +273,10 @@ class AlertDialogWidget extends StatelessWidget {
                 ?.apply(color: Theme.of(context).colorScheme.onBackground),
           ),
           onTap: () {
-            _addRecord(dto)
-                .then((value) {
-                  print('data added');
-                  Navigator.pop(context);
-                })
-                .catchError((error) => 'failed to add data: $error');
+            _addRecord(dto).then((value) {
+              print('data added');
+              Navigator.pop(context);
+            }).catchError((error) => 'failed to add data: $error');
           },
         )
       ],
