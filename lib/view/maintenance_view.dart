@@ -29,6 +29,18 @@ class MaintenanceView extends StatelessWidget {
                       ),
                     );
                   },
+                ),
+                ListTile(
+                  title: const Text('エンジンオイル交換記録'),
+                  trailing: const Icon(Icons.oil_barrel_outlined),
+                  onTap: () {print('tapped');
+                  },
+                ),
+                ListTile(
+                  title: const Text('ウォッシャー液交換記録'),
+                  trailing: const Icon(Icons.water_outlined),
+                  onTap: () {print('tapped');
+                  },
                 )
               ],
             ),
