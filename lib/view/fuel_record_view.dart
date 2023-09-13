@@ -401,17 +401,252 @@ class RefuelHistories extends StatelessWidget {
                     child: ListTile(
                       title: Text(
                         fromDate(document.get('refuelDate').toDate()),
-                          style: Theme.of(context).textTheme.labelLarge?.apply(color: Theme.of(context).colorScheme.onPrimary),
+                        style: Theme.of(context).textTheme.labelLarge?.apply(
+                            color: Theme.of(context).colorScheme.onPrimary),
                       ),
-                      subtitle: Text(
-                          '給油量: ${document.get('fuelQuantity')}[L]\n単価: ${document.get('unitPrice')}[円/L]\n走行距離: ${document.get('droveDistanceFromLastRefuel')}[km]',
-                      style: Theme.of(context).textTheme.labelSmall?.apply(color: Theme.of(context).colorScheme.onPrimary),),
-                      isThreeLine: true,
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                HistoryDetail(document: document),
+                          ),
+                        );
+                      },
                     ),
                   );
                 }).toList(),
               );
           }
         });
+  }
+}
+
+class HistoryDetail extends StatelessWidget {
+  const HistoryDetail({super.key, required this.document});
+
+  final DocumentSnapshot document;
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return Scaffold(
+      appBar: AppBar(),
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Card(
+              color: Theme.of(context).colorScheme.primaryContainer,
+              child: Container(
+                padding: const EdgeInsets.all(8.0),
+                height: size.height / 2.0,
+                width: size.width,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      '給油日: ${fromDate(document.get('refuelDate').toDate())}',
+                      style: Theme.of(context).textTheme.headlineSmall?.apply(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimaryContainer,
+                          ),
+                    ),
+                    Container(
+                        padding: const EdgeInsets.all(8.0),
+                        height: (size.height / 2.0) * 0.8,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: <Widget>[
+                                Text(
+                                  '給油量',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge
+                                      ?.apply(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondaryContainer),
+                                ),
+                                Text(
+                                  '1リットル単価',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge
+                                      ?.apply(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondaryContainer),
+                                ),
+                                Text(
+                                  '走行距離',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge
+                                      ?.apply(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondaryContainer),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: <Widget>[
+                                Text(
+                                  '${document.get('fuelQuantity')}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge
+                                      ?.apply(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondaryContainer),
+                                ),
+                                Text(
+                                  '${document.get('unitPrice')}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge
+                                      ?.apply(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondaryContainer),
+                                ),
+                                Text(
+                                  '${document.get('droveDistanceFromLastRefuel')}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge
+                                      ?.apply(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondaryContainer),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: <Widget>[
+                                Text(
+                                  '[L]',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge
+                                      ?.apply(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondaryContainer),
+                                ),
+                                Text(
+                                  '[¥/L]',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge
+                                      ?.apply(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondaryContainer),
+                                ),
+                                Text(
+                                  '[km]',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge
+                                      ?.apply(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondaryContainer),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ))
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(8.0),
+              height: (size.height / 2.0) * 0.3,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Card(
+                    color: Theme.of(context).colorScheme.tertiaryContainer,
+                    child: Container(
+                      height: (size.height / 2.0) * 0.3,
+                      width: (size.width / 2.0) * 0.9,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            Icons.delete,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onTertiaryContainer,
+                          ),
+                          Text(
+                            '削除',
+                            style:
+                                Theme.of(context).textTheme.labelLarge?.apply(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onTertiaryContainer,
+                                    ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  ElevatedButton(
+                    child: Container(
+                      color: Theme,
+                      height: (size.height / 2.0) * 0.2,
+                      width: (size.width / 2.0) * 0.6,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            Icons.edit,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onTertiaryContainer,
+                          ),
+                          Text(
+                            '修正',
+                            style:
+                            Theme.of(context).textTheme.labelLarge?.apply(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onTertiaryContainer,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    onPressed: (){
+                      print('tapped');
+                    },
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
