@@ -1,4 +1,5 @@
 import 'package:car_app/view/fuel_record_view.dart';
+import 'package:car_app/view/oil_refill_record_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 
@@ -33,7 +34,11 @@ class MaintenanceView extends StatelessWidget {
                 ListTile(
                   title: const Text('エンジンオイル交換記録'),
                   trailing: const Icon(Icons.oil_barrel_outlined),
-                  onTap: () {print('tapped');
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const OilRefillRecord(),
+                      ),
+                    );
                   },
                 ),
                 ListTile(

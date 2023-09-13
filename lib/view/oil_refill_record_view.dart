@@ -6,37 +6,29 @@ import 'package:intl/intl.dart';
 
 import '../main.dart';
 
-class FuelRecordModel {
-  FuelRecordModel(
+class OilRefillRecordModel {
+  OilRefillRecordModel(
       {required this.date,
-      required this.fuelQuantity,
-      required this.unitPrice,
-      required this.droveDistanceFromLastRefuel});
+        required this.grade,
+        required this.brandName,
+        required this.totalDistance});
 
-  String _id = '';
   final DateTime date;
-  final double fuelQuantity;
-  final double unitPrice;
-  final double droveDistanceFromLastRefuel;
+  final String grade;
+  final String brandName;
+  final double totalDistance;
   late final DateTime createdAt = DateTime.now();
 
-  set id(String s) {
-    if (s.isNotEmpty) {
-      _id = s;
-    } else {
-      print('id値が不正です。 $s');
-    }
-  }
 }
 
-class FuelRecord extends StatefulWidget {
-  const FuelRecord({super.key});
+class OilRefillRecord extends StatefulWidget {
+  const OilRefillRecord({super.key});
 
   @override
-  State<FuelRecord> createState() => _FuelRecordState();
+  State<OilRefillRecord> createState() => _OilRefillRecordState();
 }
 
-class _FuelRecordState extends State<FuelRecord> {
+class _OilRefillRecordState extends State<OilRefillRecord> {
   int _currentIndex = 0;
 
   void _onItemTapped(int index) => setState(() => _currentIndex = index);
@@ -47,14 +39,14 @@ class _FuelRecordState extends State<FuelRecord> {
     return Scaffold(
       appBar: AppBar(),
       body: _currentIndex == 0
-          ? const FuelRecordAddView()
+          ? const OilRefillRecordAddView()
           : const FuelHistoryView(),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
               icon: Icon(Icons.add_circle_outline_outlined), label: '記録'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.list_outlined), label: '給油履歴'),
+              icon: Icon(Icons.list_outlined), label: 'オイル交換履歴'),
         ],
         currentIndex: _currentIndex,
         fixedColor: Colors.blueAccent,
@@ -68,18 +60,18 @@ class _FuelRecordState extends State<FuelRecord> {
 class AddAlertDialogWidget extends StatelessWidget {
   const AddAlertDialogWidget({Key? key, required this.dto}) : super(key: key);
 
-  final FuelRecordModel dto;
+  final OilRefillRecordModel dto;
 
-  Future<void> _addRecord(FuelRecordModel dto) async {
+  Future<void> _addRecord(OilRefillRecordModel dto) async {
     final collectionRef = db
         .collection('CAR_MAINTENANCE')
-        .doc('REFUEL_RECORD')
+        .doc('OIL_REFILL_RECORD')
         .collection('RECORDS');
     await collectionRef.doc().set({
-      'refuelDate': dto.date,
-      'fuelQuantity': dto.fuelQuantity,
-      'unitPrice': dto.unitPrice,
-      'droveDistanceFromLastRefuel': dto.droveDistanceFromLastRefuel,
+      'refillDate': dto.date,
+      'grade': dto.grade,
+      'brandName': dto.brandName,
+      'totalDistance': dto.totalDistance,
       'createdAt': DateTime.now()
     });
   }
@@ -136,21 +128,21 @@ class AddAlertDialogWidget extends StatelessWidget {
   }
 }
 
-class FuelRecordAddView extends StatefulWidget {
-  const FuelRecordAddView({super.key});
+class OilRefillRecordAddView extends StatefulWidget {
+  const OilRefillRecordAddView({super.key});
 
   @override
-  State<FuelRecordAddView> createState() => _FuelRecordAddViewState();
+  State<OilRefillRecordAddView> createState() => _OilRefillRecordAddViewState();
 }
 
-class _FuelRecordAddViewState extends State<FuelRecordAddView> {
+class _OilRefillRecordAddViewState extends State<OilRefillRecordAddView> {
   final _formKey = GlobalKey<FormState>();
 
   DateTime _date = DateTime.now();
   final DateFormat _dateFormat = DateFormat('yyyy年MM月dd日');
-  double _fuelQuantity = 0.0;
-  double _unitPrice = 0.0;
-  double _droveDistanceFromLastRefuel = 0.0;
+  String _grade = '';
+  String _brandName = '';
+  double _totalDistance = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -175,8 +167,8 @@ class _FuelRecordAddViewState extends State<FuelRecordAddView> {
                   Text(
                     _dateFormat.format(_date),
                     style: Theme.of(context).textTheme.labelLarge?.apply(
-                          color: Theme.of(context).colorScheme.onBackground,
-                        ),
+                      color: Theme.of(context).colorScheme.onBackground,
+                    ),
                   ),
                   TextButton(
                     style: TextButton.styleFrom(
@@ -213,52 +205,52 @@ class _FuelRecordAddViewState extends State<FuelRecordAddView> {
               TextFormField(
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return '給油量を正しく入力してください';
+                    return 'グレードを正しく入力してください(例:0W-20)';
                   }
                   return null;
                 },
                 style: Theme.of(context).textTheme.labelLarge?.apply(
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
-                keyboardType: TextInputType.number,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
                 decoration: InputDecoration(
                   fillColor: Theme.of(context).colorScheme.primary,
                   filled: true,
                   border: const OutlineInputBorder(),
-                  hintText: '給油量[L]',
+                  hintText: 'グレード',
                   hintStyle: Theme.of(context).textTheme.labelLarge?.apply(
-                        color: Theme.of(context).colorScheme.onPrimary,
-                      ),
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
                 ),
                 onChanged: (value) {
                   setState(() {
-                    _fuelQuantity = double.tryParse(value) ?? 0.0;
+                    _grade = value;
+                    _grade = _grade ?? '';
                   });
                 },
               ),
               TextFormField(
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return '単価を正しく入力してください';
+                    return '銘柄を入力してください。';
                   }
                   return null;
                 },
                 style: Theme.of(context).textTheme.labelLarge?.apply(
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
-                keyboardType: TextInputType.number,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
                 decoration: InputDecoration(
                   fillColor: Theme.of(context).colorScheme.primary,
                   filled: true,
                   border: const OutlineInputBorder(),
-                  hintText: '単価[円/L]',
+                  hintText: '銘柄',
                   hintStyle: Theme.of(context).textTheme.labelLarge?.apply(
-                        color: Theme.of(context).colorScheme.onPrimary,
-                      ),
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
                 ),
                 onChanged: (value) {
                   setState(() {
-                    _unitPrice = double.parse(value);
+                    _brandName = value;
+                    _brandName = _brandName ?? '';
                   });
                 },
               ),
@@ -270,21 +262,21 @@ class _FuelRecordAddViewState extends State<FuelRecordAddView> {
                   return null;
                 },
                 style: Theme.of(context).textTheme.labelLarge?.apply(
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   fillColor: Theme.of(context).colorScheme.primary,
                   filled: true,
                   border: const OutlineInputBorder(),
-                  hintText: '前回給油からの走行距離[km]',
+                  hintText: '総走行距離[km]',
                   hintStyle: Theme.of(context).textTheme.labelLarge?.apply(
-                        color: Theme.of(context).colorScheme.onPrimary,
-                      ),
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
                 ),
                 onChanged: (value) {
                   setState(() {
-                    _droveDistanceFromLastRefuel = double.parse(value);
+                    _totalDistance = double.parse(value);
                   });
                 },
               ),
@@ -298,12 +290,11 @@ class _FuelRecordAddViewState extends State<FuelRecordAddView> {
                 ),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    FuelRecordModel dto = FuelRecordModel(
+                    OilRefillRecordModel dto = OilRefillRecordModel(
                         date: _date,
-                        fuelQuantity: _fuelQuantity,
-                        unitPrice: _unitPrice,
-                        droveDistanceFromLastRefuel:
-                            _droveDistanceFromLastRefuel);
+                        grade: _grade,
+                        brandName: _brandName,
+                        totalDistance: _totalDistance);
 
                     showDialog<void>(
                         context: context,
@@ -335,57 +326,29 @@ class FuelHistoryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dtoList = List<FuelRecordModel>.empty(growable: true);
-
-    db
-        .collection('CAR_MAINTENANCE')
-        .doc('REFUEL_RECORD')
-        .collection('RECORDS')
-        .orderBy('refuelDate', descending: true)
-        .get()
-        .then(
-      (querySnapshot) {
-        print("successfully conpleted");
-        for (var docSnapshot in querySnapshot.docs) {
-          Map<String, dynamic> data = docSnapshot.data();
-          FuelRecordModel dto = FuelRecordModel(
-              date: data['refuelDate'].toDate(),
-              fuelQuantity: data['fuelQuantity'],
-              unitPrice: data['unitPrice'],
-              droveDistanceFromLastRefuel: data['droveDistanceFromLastRefuel']);
-          dto.id = docSnapshot.id;
-          dtoList.add(dto);
-        }
-      },
-      onError: (e) => print('Error completing: $e'),
-    );
-
-    for (var dto in dtoList) {
-      print(dto.unitPrice);
-    }
 
     final size = MediaQuery.of(context).size;
     return SafeArea(
         child: Container(
-      height: size.height,
-      width: size.width,
-      padding: const EdgeInsets.all(8.0),
-      child: RefuelHistories(),
-    ));
+          height: size.height,
+          width: size.width,
+          padding: const EdgeInsets.all(8.0),
+          child: const OilRefillHistories(),
+        ));
   }
 }
 
-class RefuelHistories extends StatelessWidget {
-  const RefuelHistories({super.key});
+class OilRefillHistories extends StatelessWidget {
+  const OilRefillHistories({super.key});
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
         stream: db
             .collection('CAR_MAINTENANCE')
-            .doc('REFUEL_RECORD')
+            .doc('OIL_REFILL_RECORD')
             .collection('RECORDS')
-            .orderBy('refuelDate', descending: true)
+            .orderBy('refillDate', descending: true)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
@@ -401,22 +364,22 @@ class RefuelHistories extends StatelessWidget {
                     color: Theme.of(context).colorScheme.primary,
                     child: ListTile(
                       title: Text(
-                        fromDate(document.get('refuelDate').toDate()),
+                        fromDate(document.get('refillDate').toDate()),
                         style: Theme.of(context).textTheme.labelLarge?.apply(
                             color: Theme.of(context).colorScheme.onPrimary),
                       ),
                       subtitle: Text(
-                        '走行距離: ${document.get('droveDistanceFromLastRefuel')}km',
+                        '総走行距離: ${document.get('totalDistance')}km',
                         style: Theme.of(context).textTheme.labelMedium?.apply(
                             color: Theme.of(context).colorScheme.onPrimary),
                       ),
                       trailing: Icon(Icons.note_outlined,
-                          color: Theme.of(context).colorScheme.onPrimary,),
+                        color: Theme.of(context).colorScheme.onPrimary,),
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) =>
-                                HistoryDetail(document: document),
+                                OilRefillHistoryDetail(document: document),
                           ),
                         );
                       },
@@ -429,8 +392,8 @@ class RefuelHistories extends StatelessWidget {
   }
 }
 
-class HistoryDetail extends StatelessWidget {
-  const HistoryDetail({super.key, required this.document});
+class OilRefillHistoryDetail extends StatelessWidget {
+  const OilRefillHistoryDetail({super.key, required this.document});
 
   final DocumentSnapshot document;
 
@@ -455,12 +418,12 @@ class HistoryDetail extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      '給油日: ${fromDate(document.get('refuelDate').toDate())}',
+                      '交換日: ${fromDate(document.get('refillDate').toDate())}',
                       style: Theme.of(context).textTheme.headlineSmall?.apply(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onPrimaryContainer,
-                          ),
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onPrimaryContainer,
+                      ),
                     ),
                     Container(
                         padding: const EdgeInsets.all(8.0),
@@ -474,70 +437,34 @@ class HistoryDetail extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: <Widget>[
                                 Text(
-                                  '給油量',
+                                  'グレード',
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleLarge
                                       ?.apply(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onSecondaryContainer),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSecondaryContainer),
                                 ),
                                 Text(
-                                  '1リットル単価',
+                                  '銘柄',
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleLarge
                                       ?.apply(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onSecondaryContainer),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSecondaryContainer),
                                 ),
                                 Text(
-                                  '走行距離',
+                                  '総走行距離',
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleLarge
                                       ?.apply(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onSecondaryContainer),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: <Widget>[
-                                Text(
-                                  '${document.get('fuelQuantity')}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge
-                                      ?.apply(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onSecondaryContainer),
-                                ),
-                                Text(
-                                  '${document.get('unitPrice')}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge
-                                      ?.apply(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onSecondaryContainer),
-                                ),
-                                Text(
-                                  '${document.get('droveDistanceFromLastRefuel')}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge
-                                      ?.apply(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onSecondaryContainer),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSecondaryContainer),
                                 ),
                               ],
                             ),
@@ -546,24 +473,60 @@ class HistoryDetail extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: <Widget>[
                                 Text(
-                                  '[L]',
+                                  '${document.get('grade')}',
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleLarge
                                       ?.apply(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onSecondaryContainer),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSecondaryContainer),
                                 ),
                                 Text(
-                                  '[¥/L]',
+                                  '${document.get('brandName')}',
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleLarge
                                       ?.apply(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onSecondaryContainer),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSecondaryContainer),
+                                ),
+                                Text(
+                                  '${document.get('totalDistance')}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge
+                                      ?.apply(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSecondaryContainer),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: <Widget>[
+                                Text(
+                                  '',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge
+                                      ?.apply(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSecondaryContainer),
+                                ),
+                                Text(
+                                  '',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge
+                                      ?.apply(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSecondaryContainer),
                                 ),
                                 Text(
                                   '[km]',
@@ -571,9 +534,9 @@ class HistoryDetail extends StatelessWidget {
                                       .textTheme
                                       .titleLarge
                                       ?.apply(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onSecondaryContainer),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSecondaryContainer),
                                 ),
                               ],
                             ),
@@ -618,17 +581,17 @@ class HistoryDetail extends StatelessWidget {
                       showDialog<void>(
                           context: context,
                           builder: (_) {
-                            return DeleteAlertDialogWidget(document: document);
+                            return OilRefillDeleteAlertDialogWidget(document: document);
                           });
                     },
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.secondary,
-                      foregroundColor: Theme.of(context).colorScheme.onSecondary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      )
+                        backgroundColor: Theme.of(context).colorScheme.secondary,
+                        foregroundColor: Theme.of(context).colorScheme.onSecondary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        )
                     ),
                     child: Container(
                       height: (size.height / 2.0) * 0.2,
@@ -642,7 +605,7 @@ class HistoryDetail extends StatelessWidget {
                           ),
                           Text(
                             '修正',
-                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -660,8 +623,8 @@ class HistoryDetail extends StatelessWidget {
   }
 }
 
-class DeleteAlertDialogWidget extends StatelessWidget {
-  const DeleteAlertDialogWidget({Key? key, required this.document}) : super(key: key);
+class OilRefillDeleteAlertDialogWidget extends StatelessWidget {
+  const OilRefillDeleteAlertDialogWidget({Key? key, required this.document}) : super(key: key);
 
   final DocumentSnapshot document;
 
@@ -707,7 +670,7 @@ class DeleteAlertDialogWidget extends StatelessWidget {
           onTap: () {
             db
                 .collection('CAR_MAINTENANCE')
-                .doc('REFUEL_RECORD')
+                .doc('OIL_REFILL_RECORD')
                 .collection('RECORDS')
                 .doc(document.id).delete();
             Navigator.pop(context);
