@@ -393,7 +393,9 @@ class RefuelHistories extends StatelessWidget {
           }
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
-              return const Text('loading...');
+              return const Center(
+                child: Text('loading...'),
+              );
             default:
               return Column(
                 children: snapshot.data!.docs.map((DocumentSnapshot document) {
