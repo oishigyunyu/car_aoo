@@ -6,10 +6,10 @@ import '../../../main.dart';
 import '../../../model/dto/oil_refill_record_dto.dart';
 
 class OilRefillDeleteAlertDialogWidget extends StatelessWidget {
-  const OilRefillDeleteAlertDialogWidget({Key? key, required this.document})
+  const OilRefillDeleteAlertDialogWidget({Key? key, required this.id})
       : super(key: key);
 
-  final DocumentSnapshot document;
+  final String id;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +55,7 @@ class OilRefillDeleteAlertDialogWidget extends StatelessWidget {
                 .collection('CAR_MAINTENANCE')
                 .doc('OIL_REFILL_RECORD')
                 .collection('RECORDS')
-                .doc(document.id)
+                .doc(id)
                 .delete();
             Navigator.pop(context);
             Navigator.pop(context);

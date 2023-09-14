@@ -1,9 +1,11 @@
 import 'package:car_app/model/crud_base.dart';
-import 'package:car_app/model/dto/oil_refill_record_dto.dart';
-import 'package:car_app/model/oil_refill_record_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../main.dart';
+
 class OilRefillRecordRepository implements CRUDBase {
+
+  const OilRefillRecordRepository();
 
   @override
   Future<void> addData(Map<String, dynamic> data) {
@@ -11,9 +13,19 @@ class OilRefillRecordRepository implements CRUDBase {
   }
 
   @override
-  Future<void> deleteData(String id) {
+  Future<void> deleteData(String id) async {
     // TODO: implement deleteData
-    throw UnimplementedError();
+    try {
+      db
+          .collection('CAR_MAINTENANCE')
+          .doc('OIL_REFILL_RECORD')
+          .collection('RECORDS')
+          .doc(id+'sssss')
+          .delete();
+    } on FirebaseException catch (e) {
+      rethrow;
+    }
+
   }
 
   @override
