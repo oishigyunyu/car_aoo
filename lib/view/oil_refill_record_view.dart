@@ -1,3 +1,4 @@
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:car_app/utils/date_format.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -6,19 +7,18 @@ import 'package:intl/intl.dart';
 
 import '../main.dart';
 
-class OilRefillRecordModel {
-  OilRefillRecordModel(
+class OilRefillRecordDTO {
+  OilRefillRecordDTO(
       {required this.date,
-        required this.grade,
-        required this.brandName,
-        required this.totalDistance});
+      required this.grade,
+      required this.brandName,
+      required this.totalDistance});
 
   final DateTime date;
   final String grade;
   final String brandName;
   final double totalDistance;
   late final DateTime createdAt = DateTime.now();
-
 }
 
 class OilRefillRecord extends StatefulWidget {
@@ -57,23 +57,64 @@ class _OilRefillRecordState extends State<OilRefillRecord> {
   }
 }
 
-class AddAlertDialogWidget extends StatelessWidget {
+class AddAlertDialogWidget extends StatefulWidget {
   const AddAlertDialogWidget({Key? key, required this.dto}) : super(key: key);
 
-  final OilRefillRecordModel dto;
+  final OilRefillRecordDTO dto;
 
-  Future<void> _addRecord(OilRefillRecordModel dto) async {
-    final collectionRef = db
-        .collection('CAR_MAINTENANCE')
-        .doc('OIL_REFILL_RECORD')
-        .collection('RECORDS');
-    await collectionRef.doc().set({
-      'refillDate': dto.date,
-      'grade': dto.grade,
-      'brandName': dto.brandName,
-      'totalDistance': dto.totalDistance,
-      'createdAt': DateTime.now()
-    });
+  @override
+  State<AddAlertDialogWidget> createState() => _AddAlertDialogWidgetState();
+}
+
+class _AddAlertDialogWidgetState extends State<AddAlertDialogWidget> {
+  Future<void> _addRecord(OilRefillRecordDTO dto, BuildContext context) async {
+    try {
+      final collectionRef = db
+          .collection('CAR_MAINTENANCE')
+          .doc('OIL_REFILL_RECORD')
+          .collection('RECORDS');
+      await collectionRef.doc().set({
+        'refillDate': dto.date,
+        'grade': dto.grade,
+        'brandName': dto.brandName,
+        'totalDistance': dto.totalDistance,
+        'createdAt': DateTime.now()
+      });
+      if (!mounted) {
+        return;
+      }
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('データが保存されました'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+      FocusManager.instance.primaryFocus?.unfocus();
+    } on FirebaseException catch (e) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('データの保存に失敗しました'),
+          content: Text(e.message.toString()),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
   }
 
   @override
@@ -116,11 +157,10 @@ class AddAlertDialogWidget extends StatelessWidget {
                 ?.apply(color: Theme.of(context).colorScheme.onBackground),
           ),
           onTap: () {
-            _addRecord(dto).then((value) {
-              print('data added');
-              Navigator.pop(context);
-              FocusManager.instance.primaryFocus?.unfocus();
-            }).catchError((error) => 'failed to add data: $error');
+            Navigator.of(context).pop();
+            _addRecord(widget.dto, context)
+                .then((value) {})
+                .catchError((error) => 'failed to add data: $error');
           },
         )
       ],
@@ -167,8 +207,8 @@ class _OilRefillRecordAddViewState extends State<OilRefillRecordAddView> {
                   Text(
                     _dateFormat.format(_date),
                     style: Theme.of(context).textTheme.labelLarge?.apply(
-                      color: Theme.of(context).colorScheme.onBackground,
-                    ),
+                          color: Theme.of(context).colorScheme.onBackground,
+                        ),
                   ),
                   TextButton(
                     style: TextButton.styleFrom(
@@ -210,16 +250,16 @@ class _OilRefillRecordAddViewState extends State<OilRefillRecordAddView> {
                   return null;
                 },
                 style: Theme.of(context).textTheme.labelLarge?.apply(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                ),
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
                 decoration: InputDecoration(
                   fillColor: Theme.of(context).colorScheme.primary,
                   filled: true,
                   border: const OutlineInputBorder(),
                   hintText: 'グレード',
                   hintStyle: Theme.of(context).textTheme.labelLarge?.apply(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                  ),
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
                 ),
                 onChanged: (value) {
                   setState(() {
@@ -236,16 +276,16 @@ class _OilRefillRecordAddViewState extends State<OilRefillRecordAddView> {
                   return null;
                 },
                 style: Theme.of(context).textTheme.labelLarge?.apply(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                ),
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
                 decoration: InputDecoration(
                   fillColor: Theme.of(context).colorScheme.primary,
                   filled: true,
                   border: const OutlineInputBorder(),
                   hintText: '銘柄',
                   hintStyle: Theme.of(context).textTheme.labelLarge?.apply(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                  ),
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
                 ),
                 onChanged: (value) {
                   setState(() {
@@ -262,8 +302,8 @@ class _OilRefillRecordAddViewState extends State<OilRefillRecordAddView> {
                   return null;
                 },
                 style: Theme.of(context).textTheme.labelLarge?.apply(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                ),
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   fillColor: Theme.of(context).colorScheme.primary,
@@ -271,8 +311,8 @@ class _OilRefillRecordAddViewState extends State<OilRefillRecordAddView> {
                   border: const OutlineInputBorder(),
                   hintText: '総走行距離[km]',
                   hintStyle: Theme.of(context).textTheme.labelLarge?.apply(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                  ),
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
                 ),
                 onChanged: (value) {
                   setState(() {
@@ -290,7 +330,7 @@ class _OilRefillRecordAddViewState extends State<OilRefillRecordAddView> {
                 ),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    OilRefillRecordModel dto = OilRefillRecordModel(
+                    OilRefillRecordDTO dto = OilRefillRecordDTO(
                         date: _date,
                         grade: _grade,
                         brandName: _brandName,
@@ -326,15 +366,15 @@ class FuelHistoryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final size = MediaQuery.of(context).size;
     return SafeArea(
-        child: Container(
-          height: size.height,
-          width: size.width,
-          padding: const EdgeInsets.all(8.0),
-          child: const OilRefillHistories(),
-        ));
+      child: Container(
+        height: size.height,
+        width: size.width,
+        padding: const EdgeInsets.all(8.0),
+        child: const OilRefillHistories(),
+      ),
+    );
   }
 }
 
@@ -373,8 +413,10 @@ class OilRefillHistories extends StatelessWidget {
                         style: Theme.of(context).textTheme.labelMedium?.apply(
                             color: Theme.of(context).colorScheme.onPrimary),
                       ),
-                      trailing: Icon(Icons.note_outlined,
-                        color: Theme.of(context).colorScheme.onPrimary,),
+                      trailing: Icon(
+                        Icons.note_outlined,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
@@ -420,10 +462,10 @@ class OilRefillHistoryDetail extends StatelessWidget {
                     Text(
                       '交換日: ${fromDate(document.get('refillDate').toDate())}',
                       style: Theme.of(context).textTheme.headlineSmall?.apply(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onPrimaryContainer,
-                      ),
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimaryContainer,
+                          ),
                     ),
                     Container(
                         padding: const EdgeInsets.all(8.0),
@@ -442,9 +484,9 @@ class OilRefillHistoryDetail extends StatelessWidget {
                                       .textTheme
                                       .titleLarge
                                       ?.apply(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSecondaryContainer),
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondaryContainer),
                                 ),
                                 Text(
                                   '銘柄',
@@ -452,9 +494,9 @@ class OilRefillHistoryDetail extends StatelessWidget {
                                       .textTheme
                                       .titleLarge
                                       ?.apply(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSecondaryContainer),
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondaryContainer),
                                 ),
                                 Text(
                                   '総走行距離',
@@ -462,9 +504,9 @@ class OilRefillHistoryDetail extends StatelessWidget {
                                       .textTheme
                                       .titleLarge
                                       ?.apply(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSecondaryContainer),
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondaryContainer),
                                 ),
                               ],
                             ),
@@ -478,9 +520,9 @@ class OilRefillHistoryDetail extends StatelessWidget {
                                       .textTheme
                                       .titleLarge
                                       ?.apply(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSecondaryContainer),
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondaryContainer),
                                 ),
                                 Text(
                                   '${document.get('brandName')}',
@@ -488,9 +530,9 @@ class OilRefillHistoryDetail extends StatelessWidget {
                                       .textTheme
                                       .titleLarge
                                       ?.apply(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSecondaryContainer),
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondaryContainer),
                                 ),
                                 Text(
                                   '${document.get('totalDistance')}',
@@ -498,9 +540,9 @@ class OilRefillHistoryDetail extends StatelessWidget {
                                       .textTheme
                                       .titleLarge
                                       ?.apply(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSecondaryContainer),
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondaryContainer),
                                 ),
                               ],
                             ),
@@ -514,9 +556,9 @@ class OilRefillHistoryDetail extends StatelessWidget {
                                       .textTheme
                                       .titleLarge
                                       ?.apply(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSecondaryContainer),
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondaryContainer),
                                 ),
                                 Text(
                                   '',
@@ -524,9 +566,9 @@ class OilRefillHistoryDetail extends StatelessWidget {
                                       .textTheme
                                       .titleLarge
                                       ?.apply(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSecondaryContainer),
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondaryContainer),
                                 ),
                                 Text(
                                   '[km]',
@@ -534,9 +576,9 @@ class OilRefillHistoryDetail extends StatelessWidget {
                                       .textTheme
                                       .titleLarge
                                       ?.apply(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSecondaryContainer),
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondaryContainer),
                                 ),
                               ],
                             ),
@@ -555,12 +597,13 @@ class OilRefillHistoryDetail extends StatelessWidget {
                 children: <Widget>[
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Theme.of(context).colorScheme.secondary,
-                        foregroundColor: Theme.of(context).colorScheme.onSecondary,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.secondary,
+                        foregroundColor:
+                            Theme.of(context).colorScheme.onSecondary,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
-                        )
-                    ),
+                        )),
                     child: Container(
                       height: (size.height / 2.0) * 0.2,
                       width: (size.width / 2.0) * 0.6,
@@ -577,22 +620,24 @@ class OilRefillHistoryDetail extends StatelessWidget {
                         ],
                       ),
                     ),
-                    onPressed: (){
+                    onPressed: () {
                       showDialog<void>(
                           context: context,
                           builder: (_) {
-                            return OilRefillDeleteAlertDialogWidget(document: document);
+                            return OilRefillDeleteAlertDialogWidget(
+                                document: document);
                           });
                     },
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Theme.of(context).colorScheme.secondary,
-                        foregroundColor: Theme.of(context).colorScheme.onSecondary,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.secondary,
+                        foregroundColor:
+                            Theme.of(context).colorScheme.onSecondary,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
-                        )
-                    ),
+                        )),
                     child: Container(
                       height: (size.height / 2.0) * 0.2,
                       width: (size.width / 2.0) * 0.6,
@@ -609,7 +654,7 @@ class OilRefillHistoryDetail extends StatelessWidget {
                         ],
                       ),
                     ),
-                    onPressed: (){
+                    onPressed: () {
                       print('tapped');
                     },
                   ),
@@ -624,7 +669,8 @@ class OilRefillHistoryDetail extends StatelessWidget {
 }
 
 class OilRefillDeleteAlertDialogWidget extends StatelessWidget {
-  const OilRefillDeleteAlertDialogWidget({Key? key, required this.document}) : super(key: key);
+  const OilRefillDeleteAlertDialogWidget({Key? key, required this.document})
+      : super(key: key);
 
   final DocumentSnapshot document;
 
@@ -672,7 +718,8 @@ class OilRefillDeleteAlertDialogWidget extends StatelessWidget {
                 .collection('CAR_MAINTENANCE')
                 .doc('OIL_REFILL_RECORD')
                 .collection('RECORDS')
-                .doc(document.id).delete();
+                .doc(document.id)
+                .delete();
             Navigator.pop(context);
             Navigator.pop(context);
           },
