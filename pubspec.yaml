@@ -38,10 +38,9 @@ dependencies:
   http: ^0.13.5
   flutter_riverpod: ^2.1.2
   shared_preferences: ^2.2.0
-  liquid_swipe: ^3.1.0
   cloud_firestore: ^4.8.4
   flutter_datetime_picker_plus: ^2.0.1
-  adaptive_dialog: ^1.9.0+2
+  flutter_svg: ^2.0.7
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -77,6 +76,7 @@ flutter:
     - assets/static/images/car-top-view.png
     - assets/static/images/dash.jpeg
     - assets/static/images/nissan_logo_white.png
+    - assets/static/images/nissan_fairlady_z_1.svg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
