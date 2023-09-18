@@ -14,7 +14,6 @@ class OilRefillRecordAddView extends StatefulWidget {
 
 class _OilRefillRecordAddViewState extends State<OilRefillRecordAddView> {
   final _formKey = GlobalKey<FormState>();
-
   DateTime _date = DateTime.now();
   final DateFormat _dateFormat = DateFormat('yyyy年MM月dd日');
   String _grade = '';

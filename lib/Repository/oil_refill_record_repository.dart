@@ -8,30 +8,38 @@ class OilRefillRecordRepository implements CRUDBase {
   const OilRefillRecordRepository();
 
   @override
-  Future<void> addData(Map<String, dynamic> data) {
-    throw UnimplementedError();
+  Future<void> addData(Map<String, dynamic> data) async {
+    db
+        .collection('CAR_MAINTENANCE')
+        .doc('OIL_REFILL_RECORD')
+        .collection('RECORDS')
+        .doc().set({
+          'refillDate': data['refillDate'],
+          'grade': data['grade'],
+          'brandName': data['brandName'],
+          'totalDistance': data['totalDistance'],
+          'createdAt': DateTime.now()});
   }
 
   @override
   Future<void> deleteData(String id) async {
     // TODO: implement deleteData
-    try {
-      db
+    db
           .collection('CAR_MAINTENANCE')
           .doc('OIL_REFILL_RECORD')
           .collection('RECORDS')
-          .doc(id+'sssss')
+          .doc(id)
           .delete();
-    } on FirebaseException catch (e) {
-      rethrow;
-    }
-
   }
 
   @override
-  Future<CollectionReference<Map<String, dynamic>>> getCollection() {
-    // TODO: implement getCollection
-    throw UnimplementedError();
+  Stream<QuerySnapshot> getCollection() {
+    return db
+        .collection('CAR_MAINTENANCE')
+        .doc('OIL_REFILL_RECORD')
+        .collection('RECORDS')
+        .orderBy('refillDate', descending: true)
+        .snapshots();
   }
 
   @override

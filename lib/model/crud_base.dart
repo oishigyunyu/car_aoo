@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class CRUDBase {
-  Future<CollectionReference<Map<String, dynamic>>> getCollection();
+  Stream<QuerySnapshot> getCollection();
 
   Future<void> addData(Map<String, dynamic> data);
 

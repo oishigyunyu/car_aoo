@@ -370,8 +370,10 @@ class FuelHistoryView extends StatelessWidget {
       height: size.height,
       width: size.width,
       padding: const EdgeInsets.all(8.0),
-      child: RefuelHistories(),
-    ));
+      child: const SingleChildScrollView(
+        child: RefuelHistories(),
+      ),
+    ),);
   }
 }
 

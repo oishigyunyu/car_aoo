@@ -23,4 +23,14 @@ class OilRefillRecordDTO {
       createdAt: DateTime.now()
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'refillDate': date,
+      'grade': grade,
+      'brandName': brandName,
+      'totalDistance': totalDistance,
+      'createdAt': createdAt
+    };
+  }
 }

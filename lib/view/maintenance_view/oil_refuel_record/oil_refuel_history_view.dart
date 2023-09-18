@@ -9,6 +9,9 @@ import 'alert_view.dart';
 class OilRefillHistoryView extends StatelessWidget {
   const OilRefillHistoryView({super.key});
 
+  final OilRefillRecordRepository repository =
+  const OilRefillRecordRepository();
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -17,14 +20,16 @@ class OilRefillHistoryView extends StatelessWidget {
         height: size.height,
         width: size.width,
         padding: const EdgeInsets.all(8.0),
-        child: _buildStreamBuilder(context),
+        child: SingleChildScrollView(
+          child: _buildStreamBuilder(context),
+        ),
       ),
     );
   }
 
   Widget _buildStreamBuilder(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: _getStream(),
+      stream: repository.getCollection(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return Text('Error ${snapshot.error}');
@@ -39,15 +44,6 @@ class OilRefillHistoryView extends StatelessWidget {
         }
       },
     );
-  }
-
-  Stream<QuerySnapshot> _getStream() {
-    return db
-        .collection('CAR_MAINTENANCE')
-        .doc('OIL_REFILL_RECORD')
-        .collection('RECORDS')
-        .orderBy('refillDate', descending: true)
-        .snapshots();
   }
 
   Widget _buildListTile(
@@ -322,7 +318,7 @@ class DeleteDialogWidget extends StatefulWidget {
 
 class _DeleteDialogWidgetState extends State<DeleteDialogWidget> {
 
-  Future _successDialog() {
+  Future<void> _successDialog() {
     return showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -341,7 +337,7 @@ class _DeleteDialogWidgetState extends State<DeleteDialogWidget> {
     );
   }
 
-  Future _failDialog(FirebaseException e) {
+  Future<void> _failDialog(FirebaseException e) {
     return showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -395,17 +391,14 @@ class _DeleteDialogWidgetState extends State<DeleteDialogWidget> {
                 color: Theme.of(context).colorScheme.onBackground),
           ),
           onTap: () {
-            try{
-              widget.repository.deleteData(widget.id);
-
-              if(!mounted) {
-                return;
-              }
-              _successDialog();
-            } on FirebaseException catch (e) {
-              _failDialog(e);
-            }
-
+            widget.repository.deleteData(widget.id)
+                .then((value) {
+                  if (!mounted) {
+                    return;
+                  }
+                  _successDialog();
+                })
+                .catchError((error) => _failDialog(error));
           },
         ),
       ],
