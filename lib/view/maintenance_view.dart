@@ -7,9 +7,7 @@ class MaintenanceView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery
-        .of(context)
-        .size;
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
@@ -21,31 +19,51 @@ class MaintenanceView extends StatelessWidget {
             child: ListView(
               children: <Widget>[
                 ListTile(
-                  title: const Text('給油記録'),
-                  trailing: const Icon(Icons.local_gas_station_outlined),
+                  title: Text(
+                    '給油記録',
+                    style: Theme.of(context).textTheme.titleLarge?.apply(
+                          color: Theme.of(context).colorScheme.onBackground,
+                        ),
+                  ),
+                  trailing: FittedBox(
+                    fit: BoxFit.fill,
+                    child: Icon(
+                      Icons.local_gas_station_outlined,
+                      color: Theme.of(context).colorScheme.onBackground,
+                    ),
+                  ),
                   onTap: () {
                     Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const FuelRecord(),
+                      MaterialPageRoute(
+                        builder: (context) => const FuelRecord(),
                       ),
                     );
                   },
                 ),
+                const Divider(),
                 ListTile(
-                  title: const Text('エンジンオイル交換記録'),
-                  trailing: const Icon(Icons.oil_barrel_outlined),
+                  title: Text(
+                    'エンジンオイル交換記録',
+                    style: Theme.of(context).textTheme.titleLarge?.apply(
+                          color: Theme.of(context).colorScheme.onBackground,
+                        ),
+                  ),
+                  trailing: FittedBox(
+                    fit: BoxFit.fill,
+                    child: Icon(
+                      Icons.oil_barrel_outlined,
+                      color: Theme.of(context).colorScheme.onBackground,
+                    ),
+                  ),
                   onTap: () {
                     Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const OilRefillRecord(),
+                      MaterialPageRoute(
+                        builder: (context) => const OilRefillRecord(),
                       ),
                     );
                   },
                 ),
-                ListTile(
-                  title: const Text('ウォッシャー液交換記録'),
-                  trailing: const Icon(Icons.water_outlined),
-                  onTap: () {print('tapped');
-                  },
-                )
+                const Divider(),
               ],
             ),
           ),

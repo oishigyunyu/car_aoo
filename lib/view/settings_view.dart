@@ -39,14 +39,14 @@ class ThemeModeTile extends ConsumerWidget {
             'Light',
             style: Theme.of(context)
                 .textTheme
-                .labelSmall
+                .titleSmall
                 ?.apply(color: Theme.of(context).colorScheme.onBackground),
           ),
           title: Text(
             'ThemeMode',
             style: Theme.of(context)
                 .textTheme
-                .labelLarge
+                .titleLarge
                 ?.apply(color: Theme.of(context).colorScheme.onBackground),
           ),
           onTap: toggle,
@@ -58,14 +58,14 @@ class ThemeModeTile extends ConsumerWidget {
             'Dark',
             style: Theme.of(context)
                 .textTheme
-                .labelSmall
+                .titleSmall
                 ?.apply(color: Theme.of(context).colorScheme.onBackground),
           ),
           title: Text(
             'ThemeMode',
             style: Theme.of(context)
                 .textTheme
-                .labelLarge
+                .titleLarge
                 ?.apply(color: Theme.of(context).colorScheme.onBackground),
           ),
           onTap: toggle,
@@ -77,14 +77,14 @@ class ThemeModeTile extends ConsumerWidget {
             'System',
             style: Theme.of(context)
                 .textTheme
-                .labelSmall
+                .titleSmall
                 ?.apply(color: Theme.of(context).colorScheme.onBackground),
           ),
           title: Text(
             'ThemeMode',
             style: Theme.of(context)
                 .textTheme
-                .labelLarge
+                .titleLarge
                 ?.apply(color: Theme.of(context).colorScheme.onBackground),
           ),
           onTap: toggle,

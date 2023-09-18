@@ -22,96 +22,73 @@ class MenuView extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(),
       body: SafeArea(
-        child: SizedBox(
-          height: size.height,
-          width: size.width,
-          child: ListView.builder(
-            itemExtent: size.height / 5,
-            itemCount: iconsMaps.length - 1,
-            itemBuilder: (context, index) {
-              return Container(
-                padding: const EdgeInsets.all(8.0),
-                child: ListTile(
-                  dense: true,
-                  tileColor: Theme
-                      .of(context)
-                      .colorScheme
-                      .primaryContainer,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(10.0),
-                    ),
-                  ),
-                  title: Center(
-                    child: Text(
-                      iconsMaps.keys.elementAt(index),
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .displaySmall
-                          ?.apply(
-                        color:
-                        Theme
-                            .of(context)
-                            .colorScheme
-                            .onPrimaryContainer,),
-                    ),
-                  ),
-                  leading: Icon(
-                    iconsMaps.values.elementAt(index),
-                    size: size.width / 8,
-                    color: Theme.of(context).colorScheme.onPrimaryContainer,
-                  ),
-                  onTap: () {
-                    switch (iconsMaps.keys.elementAt(index)) {
-                      case ('Music'):
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const MusicMainView(),
-                          ),
-                        );
-                        break;
-                      case ('Map'):
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const GoogleMapView(),
-                          ),
-                        );
-                        break;
-                      case ('Information'):
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const InformationView(),
-                          ),
-                        );
-                        break;
-                      case ('Settings'):
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const SettingsView(),
-                          ),
-                        );
-                        break;
-                      case ('Maintenance'):
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const MaintenanceView(),
-                          ),
-                        );
-                        break;
-                      case ('FireStore'):
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const FireStoreView(),
-                          ),
-                        );
-                        break;
-                    }
-                  },
+        child: ListView.builder(
+          itemExtent: size.height / 5,
+          itemCount: iconsMaps.length - 1,
+          itemBuilder: (context, index) {
+            return Container(
+              padding: const EdgeInsets.all(8.0),
+              child: FloatingActionButton.extended(
+                heroTag: iconsMaps.keys.elementAt(index),
+                label: Text(
+                  iconsMaps.keys.elementAt(index),
+                  style: Theme.of(context).textTheme.displaySmall,
                 ),
-              );
-            },
-          ),
+                onPressed: () {
+                  switch (iconsMaps.keys.elementAt(index)) {
+                    case ('Music'):
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const MusicMainView(),
+                        ),
+                      );
+                      break;
+                    case ('Map'):
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const GoogleMapView(),
+                        ),
+                      );
+                      break;
+                    case ('Information'):
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const InformationView(),
+                        ),
+                      );
+                      break;
+                    case ('Settings'):
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const SettingsView(),
+                        ),
+                      );
+                      break;
+                    case ('Maintenance'):
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const MaintenanceView(),
+                        ),
+                      );
+                      break;
+                    case ('FireStore'):
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const FireStoreView(),
+                        ),
+                      );
+                      break;
+                  }
+                },
+                icon: FittedBox(
+                  fit: BoxFit.fill,
+                  child: Icon(
+                      iconsMaps.values.elementAt(index),
+                  ),
+                ),
+              ),
+            );
+          },
         ),
       ),
     );
