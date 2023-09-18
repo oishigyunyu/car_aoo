@@ -26,10 +26,11 @@ class MenuView extends StatelessWidget {
           height: size.height,
           width: size.width,
           child: ListView.builder(
-            itemExtent: size.height / 4,
+            itemExtent: size.height / 5,
             itemCount: iconsMaps.length - 1,
             itemBuilder: (context, index) {
-              return Card(
+              return Container(
+                padding: const EdgeInsets.all(8.0),
                 child: ListTile(
                   dense: true,
                   tileColor: Theme
@@ -47,7 +48,7 @@ class MenuView extends StatelessWidget {
                       style: Theme
                           .of(context)
                           .textTheme
-                          .headlineLarge
+                          .displaySmall
                           ?.apply(
                         color:
                         Theme
@@ -59,6 +60,7 @@ class MenuView extends StatelessWidget {
                   leading: Icon(
                     iconsMaps.values.elementAt(index),
                     size: size.width / 8,
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
                   ),
                   onTap: () {
                     switch (iconsMaps.keys.elementAt(index)) {

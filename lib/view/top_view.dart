@@ -48,46 +48,38 @@ class TopView extends ConsumerWidget {
           height: size.height,
           color: Theme.of(context).colorScheme.background,
           child: SafeArea(
-            child: Stack(
-              children: <Widget>[
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(
-                          Icons.location_on_outlined,
-                          color: Theme.of(context).colorScheme.onBackground,
-                        ),
-                        const CurrentPositionWidget(),
-                      ],
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Column(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      const Clock(),
-                      _buildFairLadyZLogo(context),
+                      Icon(
+                        Icons.location_on_outlined,
+                        color: Theme.of(context).colorScheme.onBackground,
+                      ),
+                      const CurrentPositionWidget(),
                     ],
                   ),
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Swipe up the screen",
-                      style: Theme.of(context).textTheme.titleMedium?.apply(
-                            color: Theme.of(context).colorScheme.onBackground,
-                          ),
-                    ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    const Clock(),
+                    _buildFairLadyZLogo(context),
+                  ],
+                ),
+                Container(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Swipe up the screen",
+                    style: Theme.of(context).textTheme.titleMedium?.apply(
+                          color: Theme.of(context).colorScheme.onBackground,
+                        ),
                   ),
                 ),
               ],

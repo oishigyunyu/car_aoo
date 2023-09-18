@@ -21,7 +21,7 @@ class _MusicMainViewState extends State<MusicMainView> {
           child: Center(
             child: Text(
               "WIP",
-              style: Theme.of(context).textTheme.headlineSmall,
+              style: Theme.of(context).textTheme.displayMedium,
             ),
           ),
         ),
