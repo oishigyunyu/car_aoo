@@ -173,6 +173,12 @@ class _FuelRecordAddViewState extends State<FuelRecordAddView> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text(
+                    '給油日',
+                    style: Theme.of(context).textTheme.labelLarge?.apply(
+                          color: Theme.of(context).colorScheme.onBackground,
+                        ),
+                  ),
+                  Text(
                     _dateFormat.format(_date),
                     style: Theme.of(context).textTheme.labelLarge?.apply(
                           color: Theme.of(context).colorScheme.onBackground,
@@ -180,10 +186,10 @@ class _FuelRecordAddViewState extends State<FuelRecordAddView> {
                   ),
                   TextButton(
                     style: TextButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.secondary,
+                      backgroundColor: Theme.of(context).colorScheme.primary,
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(
-                          Radius.circular(10.0),
+                          Radius.circular(100.0),
                         ),
                       ),
                     ),
@@ -205,7 +211,7 @@ class _FuelRecordAddViewState extends State<FuelRecordAddView> {
                     child: Text(
                       '日付を選択',
                       style: Theme.of(context).textTheme.labelLarge?.apply(
-                          color: Theme.of(context).colorScheme.onSecondary),
+                          color: Theme.of(context).colorScheme.onPrimary),
                     ),
                   ),
                 ],
@@ -222,13 +228,25 @@ class _FuelRecordAddViewState extends State<FuelRecordAddView> {
                     ),
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  fillColor: Theme.of(context).colorScheme.primary,
-                  filled: true,
-                  border: const OutlineInputBorder(),
-                  hintText: '給油量[L]',
-                  hintStyle: Theme.of(context).textTheme.labelLarge?.apply(
-                        color: Theme.of(context).colorScheme.onPrimary,
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).colorScheme.primary,
+                      width: 2.0,
+                    ),
+                  ),
+                  labelStyle: Theme.of(context).textTheme.titleLarge?.apply(
+                        color: Theme.of(context).colorScheme.outline,
                       ),
+                  labelText: '給油量[L]',
+                  floatingLabelStyle: Theme.of(context).textTheme.titleMedium,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).colorScheme.primary,
+                      width: 1.0,
+                    ),
+                  ),
                 ),
                 onChanged: (value) {
                   setState(() {
@@ -248,13 +266,25 @@ class _FuelRecordAddViewState extends State<FuelRecordAddView> {
                     ),
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  fillColor: Theme.of(context).colorScheme.primary,
-                  filled: true,
-                  border: const OutlineInputBorder(),
-                  hintText: '単価[円/L]',
-                  hintStyle: Theme.of(context).textTheme.labelLarge?.apply(
-                        color: Theme.of(context).colorScheme.onPrimary,
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).colorScheme.primary,
+                      width: 2.0,
+                    ),
+                  ),
+                  labelStyle: Theme.of(context).textTheme.titleLarge?.apply(
+                        color: Theme.of(context).colorScheme.outline,
                       ),
+                  labelText: '1Lあたりの単価[¥]',
+                  floatingLabelStyle: Theme.of(context).textTheme.titleMedium,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).colorScheme.primary,
+                      width: 1.0,
+                    ),
+                  ),
                 ),
                 onChanged: (value) {
                   setState(() {
@@ -274,13 +304,25 @@ class _FuelRecordAddViewState extends State<FuelRecordAddView> {
                     ),
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  fillColor: Theme.of(context).colorScheme.primary,
-                  filled: true,
-                  border: const OutlineInputBorder(),
-                  hintText: '前回給油からの走行距離[km]',
-                  hintStyle: Theme.of(context).textTheme.labelLarge?.apply(
-                        color: Theme.of(context).colorScheme.onPrimary,
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).colorScheme.primary,
+                      width: 2.0,
+                    ),
+                  ),
+                  labelStyle: Theme.of(context).textTheme.titleLarge?.apply(
+                        color: Theme.of(context).colorScheme.outline,
                       ),
+                  labelText: '前回の給油からの走行距離[km]',
+                  floatingLabelStyle: Theme.of(context).textTheme.titleMedium,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).colorScheme.primary,
+                      width: 1.0,
+                    ),
+                  ),
                 ),
                 onChanged: (value) {
                   setState(() {
@@ -288,12 +330,13 @@ class _FuelRecordAddViewState extends State<FuelRecordAddView> {
                   });
                 },
               ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.secondary,
-                  foregroundColor: Theme.of(context).colorScheme.onSecondary,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+              TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(100.0),
+                    ),
                   ),
                 ),
                 onPressed: () {
@@ -303,7 +346,7 @@ class _FuelRecordAddViewState extends State<FuelRecordAddView> {
                         fuelQuantity: _fuelQuantity,
                         unitPrice: _unitPrice,
                         droveDistanceFromLastRefuel:
-                            _droveDistanceFromLastRefuel);
+                        _droveDistanceFromLastRefuel);
 
                     showDialog<void>(
                         context: context,
@@ -316,10 +359,8 @@ class _FuelRecordAddViewState extends State<FuelRecordAddView> {
                 },
                 child: Text(
                   '登録',
-                  style: Theme.of(context)
-                      .textTheme
-                      .labelMedium
-                      ?.apply(color: Theme.of(context).colorScheme.onSecondary),
+                  style: Theme.of(context).textTheme.labelLarge?.apply(
+                      color: Theme.of(context).colorScheme.onSecondary),
                 ),
               ),
             ],
@@ -366,14 +407,15 @@ class FuelHistoryView extends StatelessWidget {
 
     final size = MediaQuery.of(context).size;
     return SafeArea(
-        child: Container(
-      height: size.height,
-      width: size.width,
-      padding: const EdgeInsets.all(8.0),
-      child: const SingleChildScrollView(
-        child: RefuelHistories(),
+      child: Container(
+        height: size.height,
+        width: size.width,
+        padding: const EdgeInsets.all(8.0),
+        child: const SingleChildScrollView(
+          child: RefuelHistories(),
+        ),
       ),
-    ),);
+    );
   }
 }
 
@@ -414,8 +456,10 @@ class RefuelHistories extends StatelessWidget {
                         style: Theme.of(context).textTheme.labelMedium?.apply(
                             color: Theme.of(context).colorScheme.onPrimary),
                       ),
-                      trailing: Icon(Icons.note_outlined,
-                          color: Theme.of(context).colorScheme.onPrimary,),
+                      trailing: Icon(
+                        Icons.note_outlined,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
@@ -467,122 +511,123 @@ class HistoryDetail extends StatelessWidget {
                           ),
                     ),
                     Container(
-                        padding: const EdgeInsets.all(8.0),
-                        height: (size.height / 2.0) * 0.8,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: <Widget>[
-                                Text(
-                                  '給油量',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge
-                                      ?.apply(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onSecondaryContainer),
-                                ),
-                                Text(
-                                  '1リットル単価',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge
-                                      ?.apply(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onSecondaryContainer),
-                                ),
-                                Text(
-                                  '走行距離',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge
-                                      ?.apply(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onSecondaryContainer),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: <Widget>[
-                                Text(
-                                  '${document.get('fuelQuantity')}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge
-                                      ?.apply(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onSecondaryContainer),
-                                ),
-                                Text(
-                                  '${document.get('unitPrice')}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge
-                                      ?.apply(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onSecondaryContainer),
-                                ),
-                                Text(
-                                  '${document.get('droveDistanceFromLastRefuel')}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge
-                                      ?.apply(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onSecondaryContainer),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: <Widget>[
-                                Text(
-                                  '[L]',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge
-                                      ?.apply(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onSecondaryContainer),
-                                ),
-                                Text(
-                                  '[¥/L]',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge
-                                      ?.apply(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onSecondaryContainer),
-                                ),
-                                Text(
-                                  '[km]',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge
-                                      ?.apply(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onSecondaryContainer),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ))
+                      padding: const EdgeInsets.all(8.0),
+                      height: (size.height / 2.0) * 0.8,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: <Widget>[
+                              Text(
+                                '給油量',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge
+                                    ?.apply(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSecondaryContainer),
+                              ),
+                              Text(
+                                '1リットル単価',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge
+                                    ?.apply(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSecondaryContainer),
+                              ),
+                              Text(
+                                '走行距離',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge
+                                    ?.apply(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSecondaryContainer),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: <Widget>[
+                              Text(
+                                '${document.get('fuelQuantity')}',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge
+                                    ?.apply(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSecondaryContainer),
+                              ),
+                              Text(
+                                '${document.get('unitPrice')}',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge
+                                    ?.apply(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSecondaryContainer),
+                              ),
+                              Text(
+                                '${document.get('droveDistanceFromLastRefuel')}',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge
+                                    ?.apply(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSecondaryContainer),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: <Widget>[
+                              Text(
+                                '[L]',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge
+                                    ?.apply(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSecondaryContainer),
+                              ),
+                              Text(
+                                '[¥/L]',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge
+                                    ?.apply(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSecondaryContainer),
+                              ),
+                              Text(
+                                '[km]',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge
+                                    ?.apply(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSecondaryContainer),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -596,11 +641,12 @@ class HistoryDetail extends StatelessWidget {
                 children: <Widget>[
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Theme.of(context).colorScheme.secondary,
-                        foregroundColor: Theme.of(context).colorScheme.onSecondary,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        )
+                      backgroundColor: Theme.of(context).colorScheme.secondary,
+                      foregroundColor:
+                          Theme.of(context).colorScheme.onSecondary,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
                     ),
                     child: Container(
                       height: (size.height / 2.0) * 0.2,
@@ -618,7 +664,7 @@ class HistoryDetail extends StatelessWidget {
                         ],
                       ),
                     ),
-                    onPressed: (){
+                    onPressed: () {
                       showDialog<void>(
                           context: context,
                           builder: (_) {
@@ -628,12 +674,13 @@ class HistoryDetail extends StatelessWidget {
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.secondary,
-                      foregroundColor: Theme.of(context).colorScheme.onSecondary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      )
-                    ),
+                        backgroundColor:
+                            Theme.of(context).colorScheme.secondary,
+                        foregroundColor:
+                            Theme.of(context).colorScheme.onSecondary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        )),
                     child: Container(
                       height: (size.height / 2.0) * 0.2,
                       width: (size.width / 2.0) * 0.6,
@@ -646,11 +693,11 @@ class HistoryDetail extends StatelessWidget {
                           ),
                           Text(
                             '修正',
-                            ),
+                          ),
                         ],
                       ),
                     ),
-                    onPressed: (){
+                    onPressed: () {
                       print('tapped');
                     },
                   ),
@@ -665,7 +712,8 @@ class HistoryDetail extends StatelessWidget {
 }
 
 class DeleteAlertDialogWidget extends StatelessWidget {
-  const DeleteAlertDialogWidget({Key? key, required this.document}) : super(key: key);
+  const DeleteAlertDialogWidget({Key? key, required this.document})
+      : super(key: key);
 
   final DocumentSnapshot document;
 
@@ -713,7 +761,8 @@ class DeleteAlertDialogWidget extends StatelessWidget {
                 .collection('CAR_MAINTENANCE')
                 .doc('REFUEL_RECORD')
                 .collection('RECORDS')
-                .doc(document.id).delete();
+                .doc(document.id)
+                .delete();
             Navigator.pop(context);
             Navigator.pop(context);
           },

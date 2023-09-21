@@ -28,9 +28,27 @@ class MenuView extends StatelessWidget {
           itemBuilder: (context, index) {
             return Container(
               padding: const EdgeInsets.all(8.0),
-              child: FloatingActionButton.extended(
-                heroTag: iconsMaps.keys.elementAt(index),
-                label: Text(
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.resolveWith(
+                      (Set<MaterialState> states) {
+                    Color? color = Theme.of(context).colorScheme.background;
+                    return color;
+                  }),
+                  foregroundColor: MaterialStateProperty.resolveWith(
+                      (Set<MaterialState> states) {
+                    Color? color = Theme.of(context).colorScheme.onBackground;
+                    return color;
+                  }),
+                  shape: MaterialStateProperty.resolveWith(
+                      (Set<MaterialState> states) {
+                    OutlinedBorder? border = RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    );
+                    return border;
+                  }),
+                ),
+                child: Text(
                   iconsMaps.keys.elementAt(index),
                   style: Theme.of(context).textTheme.displaySmall,
                 ),
@@ -80,12 +98,6 @@ class MenuView extends StatelessWidget {
                       break;
                   }
                 },
-                icon: FittedBox(
-                  fit: BoxFit.fill,
-                  child: Icon(
-                      iconsMaps.values.elementAt(index),
-                  ),
-                ),
               ),
             );
           },

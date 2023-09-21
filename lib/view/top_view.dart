@@ -17,17 +17,8 @@ class TopView extends ConsumerWidget {
     return SvgPicture.asset(
       'assets/static/images/nissan_fairlady_z_1.svg',
       colorFilter: ColorFilter.mode(
-          Theme.of(context).colorScheme.onBackground, BlendMode.srcIn),
+          Theme.of(context).colorScheme.primary, BlendMode.srcIn),
     );
-  }
-
-  Future<Map<String, String>> _getCurrentPosition() async {
-    Map<String, String> pos = await determinePosition();
-    await Future.delayed(
-      const Duration(seconds: 1),
-    );
-
-    return Future.value(pos);
   }
 
   @override
