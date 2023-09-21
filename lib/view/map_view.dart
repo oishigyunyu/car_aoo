@@ -99,56 +99,7 @@ class _GoogleMapViewState extends State<GoogleMapView> {
                   mapController = controller;
                 },
               ),
-              Align(
-                alignment: Alignment.bottomLeft,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      FloatingActionButton.large(
-                        heroTag: "search",
-                        onPressed: () {},
-                        child: Icon(Icons.search,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onPrimaryContainer),
-                      ),
-                      SizedBox(
-                        height: size.height / 60,
-                      ),
-                      FloatingActionButton.large(
-                        heroTag: "zoom-in",
-                        onPressed: () {
-                          mapController.animateCamera(
-                            CameraUpdate.zoomIn(),
-                          );
-                        },
-                        child: Icon(Icons.add,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onPrimaryContainer),
-                      ),
-                      SizedBox(
-                        height: size.height / 60,
-                      ),
-                      FloatingActionButton.large(
-                        heroTag: "zoom-out",
-                        onPressed: () {
-                          mapController.animateCamera(
-                            CameraUpdate.zoomOut(),
-                          );
-                        },
-                        child: Icon(Icons.remove,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onPrimaryContainer),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+
               Align(
                 alignment: Alignment.bottomRight,
                 child: Padding(
@@ -162,19 +113,6 @@ class _GoogleMapViewState extends State<GoogleMapView> {
                       Icons.navigation,
                       color: Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
-                  ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.topRight,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: FloatingActionButton.large(
-                    heroTag: "return",
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: const Icon(Icons.keyboard_return),
                   ),
                 ),
               ),

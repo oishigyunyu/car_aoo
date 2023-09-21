@@ -1,4 +1,4 @@
-import 'package:car_app/utils/theme_mode_provider.dart';
+import 'package:car_app/providers/theme_mode_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

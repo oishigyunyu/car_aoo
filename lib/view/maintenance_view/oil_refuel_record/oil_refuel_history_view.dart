@@ -1,10 +1,7 @@
-import 'package:car_app/Repository/oil_refill_record_repository.dart';
+import 'package:car_app/repository/oil_refill_record_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
-import '../../../main.dart';
 import '../../../utils/date_format.dart';
-import 'alert_view.dart';
 
 class OilRefillHistoryView extends StatelessWidget {
   const OilRefillHistoryView({super.key});
@@ -67,10 +64,6 @@ class OilRefillHistoryView extends StatelessWidget {
                   .labelMedium
                   ?.apply(color: Theme.of(context).colorScheme.onPrimary),
             ),
-            trailing: Icon(
-              Icons.note_outlined,
-              color: Theme.of(context).colorScheme.onPrimary,
-            ),
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
@@ -120,7 +113,7 @@ class OilRefillHistoryDetail extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         )),
-                    child: Container(
+                    child: SizedBox(
                       height: (size.height / 2.0) * 0.2,
                       width: (size.width / 2.0) * 0.6,
                       child: const Row(
@@ -144,7 +137,7 @@ class OilRefillHistoryDetail extends StatelessWidget {
                       context, document.id, repository),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

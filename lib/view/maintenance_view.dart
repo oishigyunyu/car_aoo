@@ -1,4 +1,4 @@
-import 'package:car_app/view/fuel_record_view.dart';
+import 'package:car_app/view/maintenance_view/refuel_record_view/refuel_record_view.dart';
 import 'package:car_app/view/maintenance_view/oil_refuel_record/oil_refill_record_view.dart';
 import 'package:flutter/material.dart';
 

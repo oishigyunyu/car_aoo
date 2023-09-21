@@ -1,6 +1,6 @@
 import 'package:car_app/color_schemes.g.dart';
 import 'package:car_app/utils/shared_preferences_instances.dart';
-import 'package:car_app/utils/theme_mode_provider.dart';
+import 'package:car_app/providers/theme_mode_provider.dart';
 import 'package:car_app/view/top_view.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';

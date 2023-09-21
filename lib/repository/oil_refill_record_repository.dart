@@ -1,4 +1,4 @@
-import 'package:car_app/model/crud_base.dart';
+import 'package:car_app/repository/crud_base.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../main.dart';
