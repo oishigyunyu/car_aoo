@@ -50,7 +50,9 @@ class MenuView extends StatelessWidget {
                 ),
                 child: Text(
                   iconsMaps.keys.elementAt(index),
-                  style: Theme.of(context).textTheme.displaySmall,
+                  style: Theme.of(context).textTheme.displaySmall?.apply(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                 ),
                 onPressed: () {
                   switch (iconsMaps.keys.elementAt(index)) {
